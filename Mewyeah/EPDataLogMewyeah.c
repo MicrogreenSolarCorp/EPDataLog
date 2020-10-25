@@ -380,8 +380,8 @@ int parseBmsResponseVolt( char *pResponse, int len )
 	unsigned int highVolt=0, lowVolt=0;
 
     for (i = 0; i < G_MAX_NUMBER_OF_CELLS; i++){
-        lowByte = pResponse[10 + (2*i)];
-        highByte = pResponse[11 + (2*i)];
+        lowByte = pResponse[10 + (2*i)] & 0xFF;
+        highByte = pResponse[11 + (2*i)] & 0xFF;
         highByte = highByte & 7;  			// use only 3 bits
         cellVolt = ((highByte*256 + lowByte)) * 2.5;  // this number should be divided by 1000 in the LW display		
         bmsData.cellVoltage[i] = cellVolt;
@@ -417,7 +417,7 @@ int parseBmsResponseTemp( char *pResponse, int len )
 
   	for( i = 0; i < G_MAX_NUMBER_OF_TEMP_SENSORS; i++ )
 	{
-		temp = pResponse[10+i] - 40;
+		temp = (pResponse[10+i] & 0xFF) - 40;
 
         bmsData.temperatures[i] = temp;
         printf("cell_temps[%d]: %.0fC\n", i, bmsData.temperatures[i]);
@@ -440,7 +440,7 @@ int parseBmsResponseOther( char *pResponse, int len )
 	//-----------------------------------------------------
 	// Bat total voltage, byte 36 and 37
     lowByte  = pResponse[36] & 0xFF; // Mask out any sign extension
-	highByte = pResponse[37];
+	highByte = pResponse[37] & 0xFF;
 	uValue = (highByte*256 + lowByte);  // this voltage value should be divided by 100 in LW display
     float voltage = uValue / 10.0;
     bmsData.voltage = voltage;
@@ -448,31 +448,27 @@ int parseBmsResponseOther( char *pResponse, int len )
 
 	//-----------------------------------------------------
 	// Highest Cell Volt, byte 38 and 39
-	lowByte  = pResponse[38];
-	highByte = pResponse[39];
+	lowByte  = pResponse[38] & 0xFF;
+	highByte = pResponse[39] & 0xFF;
 	uValue = highByte*256 + lowByte;  // this voltage value should be divided by 10 in LW display
 	// LocalWord[LW_LCD_CELL_VOLT_MAX] = uValue;
 
 	//-----------------------------------------------------
 	// Lowest Cell Volt, byte 40 and 41
-	lowByte  = pResponse[40];
-	highByte = pResponse[41];
+	lowByte  = pResponse[40] & 0xFF;
+	highByte = pResponse[41] & 0xFF;
 	uValue = highByte*256 + lowByte;  // this voltage value should be divided by 10 in LW display
 	// LocalWord[LW_LCD_CELL_VOLT_MIN] = uValue;
 
 	//-----------------------------------------------------
 	// Bat Current, byte 34 and 35
 	lowByte  = pResponse[34] & 0xFF; // Mask out any sign extension
-	highByte = pResponse[35];
+	highByte = pResponse[35] & 0xFF;
 
 	uValue = highByte*256 + lowByte;
 	iValue = (int) uValue;
 
     bmsData.current = ((float) iValue - 32000.0) * -0.1;
-
-    printf("lowByte: %02X\n", lowByte);
-    printf("highByte: %02X\n", highByte);
-
     printf("current: %.2fA\n", bmsData.current);
 
     // Charging (1) Discharging (2)
@@ -497,8 +493,8 @@ int parseBmsResponseOther( char *pResponse, int len )
 
 	//-----------------------------------------------------
 	// Battery remaining energy KWH, byte 54 and 51
-	lowByte  = pResponse[54];
-	highByte = pResponse[51];
+	lowByte  = pResponse[54] & 0xFF;
+	highByte = pResponse[51] & 0xFF;
 	float kWH = (float)((highByte*256 + lowByte) / 100.0);  // this value should be divided by 100 in LW display
     
     // Convert voltage to kilovolts (kV) for consistency with kWh
@@ -508,18 +504,16 @@ int parseBmsResponseOther( char *pResponse, int len )
     int charge_Ah = (int)(kWH / voltage_kV);
 
     bmsData.remainingCapacity = charge_Ah;
-    printf("lowByte: %02X\n", lowByte);
-    printf("highByte: %02X\n", highByte);
     printf("remaining_capacity: %.0fAH\n", bmsData.remainingCapacity);
 
 	//-----------------------------------------------------
 	// Battery Higest Temperature
-	iValue  = pResponse[28]-40 ;
+	iValue  = (pResponse[28] & 0xFF) - 40;
 	// LocalWord[LW_LCD_TEMP_MAX] = iValue;
 
 	//-----------------------------------------------------
 	// Number of Temperature, byte 10
-	uValue  = pResponse[10] ;
+	uValue  = (pResponse[10] & 0xFF);
 	// LocalWord[LW_LCD_NUM_TEMPS] = uValue;
 
 
@@ -536,19 +530,19 @@ int parseBmsResponseOther( char *pResponse, int len )
 	{
 
 		// Sever Alarm 1
-		b = GETBIT( pResponse[23], i );
+		b = GETBIT( pResponse[23] & 0xFF, i );
         alarms[0][i] = '0' + b; // Convert 0 or 1 to character '0' or '1'
 
 		// Normal Alarm 2
-		b = GETBIT( pResponse[33], i );
+		b = GETBIT( pResponse[33] & 0xFF, i );
         alarms[1][i] = '0' + b;
 
 		// Sever Alarm 3
-		b = GETBIT( pResponse[55], i );
+		b = GETBIT( pResponse[55] & 0xFF, i );
         alarms[2][i] = '0' + b;
 
 		// Normal Alarm 4
-		b = GETBIT( pResponse[56], i );
+		b = GETBIT( pResponse[56] & 0xFF, i );
         alarms[3][i] = '0' + b;
 
         alarms[i][8] = '\0';  // null-terminate the string
@@ -575,7 +569,7 @@ int parseBmsResponseBatteryFailureStatus(unsigned char *pResponse) {
     char alarms[8][9];  // 8 bytes, each with 8 bits + null-terminator
     
     for (int i = 0; i < 8; ++i) {
-        int byte = pResponse[4 + i];  // start from pResponse[4]
+        int byte = pResponse[4 + i] & 0xFF;  // start from pResponse[4]
         char *currentString = alarms[i];
         
         for (int j = 7; j >= 0; --j) {  // loop through each bit in byte
