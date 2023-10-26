@@ -1,4 +1,4 @@
-#include "connection.h"
+#include "../../common/connectionWindows.h"
 #include "../common/getData.h"
 #include <windows.h>
 #include <stdio.h>
@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
         return 1; // Invalid COM port number or delay time supplied.
     }
 
-    HANDLE hComm = setupCOMPort(comPort, connectionQueryData, expectedConnectionQueryResponse);
+    HANDLE hComm = setupCOMPort(comPort, connectionQueryData, expectedConnectionQueryResponse, sizeof(connectionQueryData));
 
     if (hComm == INVALID_HANDLE_VALUE) return 1; // Could not open COM port.
 
