@@ -9,5 +9,5 @@ REM this will log one data every 5000 ms, communicating via COM3
 REM ========================================
 
 
-"%~dp0EPDataLog.exe" -t 5000
+"%~dp0EPDataLogDalyWindows.exe" -t 5000
 pause
