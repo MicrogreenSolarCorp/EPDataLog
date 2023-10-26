@@ -8,3 +8,7 @@ To compile for Daly Windows:
 
 cd /Daly/windows
 gcc -std=c99 -o EPDataLogDalyWindows ../../common/windows/connection.c ../../common/windows/outputToCsv.c ../common/getData.c main.c
+
+
+git tag -a Daly-Windows-v1.0.0 -m "Released Daly Windows 1.0.0"
+git push origin Daly-Windows-v1.0.0
