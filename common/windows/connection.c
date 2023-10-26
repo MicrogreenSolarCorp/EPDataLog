@@ -61,50 +61,57 @@ HANDLE setupCOMPort(int portNumber, const int baudRate, const unsigned char *que
         }
     } else {
         printf("No COM port supplied. Searching for a COM port... \n");
-        for (int i = 1; i <= 256; ++i) {
-            char comPortName[10];  // Enough space for "COM" + up to 3 digits + null terminator
-            sprintf(comPortName, "COM%d", i);  // Format the COM port name
-            HANDLE hComm = connectToCOMPort(comPortName, baudRate);
-            Sleep(500);
-            if (hComm != INVALID_HANDLE_VALUE) {
-                printf("Found a COM port: %s\n", comPortName);
-                DWORD bytesWritten;
 
-                // Send a query
-                if (!WriteFile(hComm, queryData, dataLength, &bytesWritten, NULL)) {
-                    printf("Error in writing to COM port\n");
+        for (int i = 1; i <= 3; i++) { // Run through 3 scans from COM1 to COM10
+            printf("Scan #%d \n", i);
+
+            for (int i = 1; i <= 10; ++i) {
+                char comPortName[10];  // Enough space for "COM" + up to 3 digits + null terminator
+                sprintf(comPortName, "COM%d", i);  // Format the COM port name
+                HANDLE hComm = connectToCOMPort(comPortName, baudRate);
+                Sleep(500);
+                if (hComm != INVALID_HANDLE_VALUE) {
+                    printf("Found a COM port: %s\n", comPortName);
+                    DWORD bytesWritten;
+
+                    // Send a query
+                    if (!WriteFile(hComm, queryData, dataLength, &bytesWritten, NULL)) {
+                        printf("Error in writing to COM port\n");
+                        CloseHandle(hComm);
+                        continue;
+                    }
+
+                    unsigned char buffer[300];
+                    DWORD bytesRead;
+
+                    // Read the response
+                    if (!ReadFile(hComm, buffer, sizeof(buffer), &bytesRead, NULL)) {
+                        printf("Error in reading from COM port\n");
+                        CloseHandle(hComm);
+                        continue;
+                    }
+
+                    printf("Read %d bytes\n", bytesRead);
+                    // Print buffer
+                    for (int i = 0; i < bytesRead; ++i) {
+                        printf("%02X ", buffer[i]);
+                    }
+
+                    // Check the response
+                    if (buffer[0] == expectedResponse[0] && buffer[1] == expectedResponse[1] && buffer[2] == expectedResponse[2]) {
+                        printf("Found the target COM port: %s\n", comPortName);
+                        return hComm;
+                    }
+                    
+                    // Close the handle if this isn't the correct one
                     CloseHandle(hComm);
-                    continue;
+                } else {
+                    printf("Unable to open COM port %s\n", comPortName);
                 }
-
-                unsigned char buffer[300];
-                DWORD bytesRead;
-
-                // Read the response
-                if (!ReadFile(hComm, buffer, sizeof(buffer), &bytesRead, NULL)) {
-                    printf("Error in reading from COM port\n");
-                    CloseHandle(hComm);
-                    continue;
-                }
-
-                printf("Read %d bytes\n", bytesRead);
-                // Print buffer
-                for (int i = 0; i < bytesRead; ++i) {
-                    printf("%02X ", buffer[i]);
-                }
-                
-                // Check the response
-                if (buffer[0] == expectedResponse[0] && buffer[1] == expectedResponse[1] && buffer[2] == expectedResponse[2]) {
-                    printf("Found the target COM port: %s\n", comPortName);
-                    return hComm;
-                }
-                
-                // Close the handle if this isn't the correct one
-                CloseHandle(hComm);
-            } else {
-                printf("Unable to open COM port %s\n", comPortName);
             }
         }
+        printf("Unable to find the target COM port. Aborting.\n");
+        return INVALID_HANDLE_VALUE;
     }
 }
 
