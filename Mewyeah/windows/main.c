@@ -1,5 +1,5 @@
 #include "connection.h"
-#include "getData.h"
+#include "../common/getData.h"
 #include <windows.h>
 #include <stdio.h>
 

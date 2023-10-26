@@ -2,7 +2,7 @@
 // Description: Implementation of functions for setting up the COM port connection.
 
 #include "connection.h"  // Include the header file for this source file
-#include "getData.h"
+#include "../common/getData.h"
 
 // Global Vars
 int g_delay_time_ms = 2000;

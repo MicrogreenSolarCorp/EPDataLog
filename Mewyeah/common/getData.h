@@ -36,12 +36,11 @@ typedef struct {
 
 extern BMSData bmsData;
 
-int getDateTime();
+void getDateTime();
 int getBMSData(HANDLE hComm, int requestType);
-static int parseBmsResponseVolt(char *pResponse, int len);
-static int parseBmsResponseOther(char *pResponse, int len);
-static int parseBmsResponseBal(char *pResponse, int len);
-static int parseBmsResponseTemp(char *pResponse, int len);
-static int parseBmsResponseBatteryFailureStatus(unsigned char *pResponse);
+static void parseBmsResponseVolt(unsigned char *pResponse, int len);
+static void parseBmsResponseOther(unsigned char *pResponse, int len);
+static void parseBmsResponseBal(unsigned char *pResponse, int len);
+static void parseBmsResponseTemp(unsigned char *pResponse, int len);
 
 #endif // GETDATA_H

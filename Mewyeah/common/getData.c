@@ -6,14 +6,14 @@
 
 BMSData bmsData; // Declare a BMSData struct variable
 // Forward declarations of static functions
-int getDateTime();
+void getDateTime();
 int getBMSData(HANDLE hComm, int requestType);
-static int parseBmsResponseVolt(char *pResponse, int len);
-static int parseBmsResponseOther(char *pResponse, int len);
-static int parseBmsResponseBal(char *pResponse, int len);
-static int parseBmsResponseTemp(char *pResponse, int len);
+static void parseBmsResponseVolt(unsigned char *pResponse, int len);
+static void parseBmsResponseOther(unsigned char *pResponse, int len);
+static void parseBmsResponseBal(unsigned char *pResponse, int len);
+static void parseBmsResponseTemp(unsigned char *pResponse, int len);
 
-int getDateTime() {
+void getDateTime() {
     // Get current date and time
     time_t raw_time;
     struct tm *tm_info;
@@ -105,13 +105,12 @@ int getBMSData(HANDLE hComm, int requestType) {
         } else {
             printf("Could not read data from port\n");
         }
-
     }
-
+    return 0;
 }
 
 // Define static functions; these functions are internal to this file
-static int parseBmsResponseVolt( char *pResponse, int len )
+static void parseBmsResponseVolt( unsigned char *pResponse, int len )
 {
 	// len should be 251, response 0x9A, Volt
     int i;
@@ -130,7 +129,7 @@ static int parseBmsResponseVolt( char *pResponse, int len )
 		{
 			highVolt = cellVolt;
 		}
-		if( (cellVolt > 0 ) && (cellVolt<lowVolt) || lowVolt==0)
+		if( ((cellVolt > 0 ) && (cellVolt<lowVolt)) || lowVolt==0)
 		{
 			lowVolt = cellVolt;
 		}
@@ -144,12 +143,12 @@ static int parseBmsResponseVolt( char *pResponse, int len )
 } // parseBmsResponseVolt()
 
 
-static int parseBmsResponseBal( char *pResponse, int len )
+static void parseBmsResponseBal( unsigned char *pResponse, int len )
 {
     // Balancing Current is not needed in the data logger
 } // parseBmsResponseBal()
 
-static int parseBmsResponseTemp( char *pResponse, int len )
+static void parseBmsResponseTemp( unsigned char *pResponse, int len )
 {
 	// len should be 191, response 0X9D, Temperature
     int temp, i;  
@@ -161,7 +160,6 @@ static int parseBmsResponseTemp( char *pResponse, int len )
         bmsData.temperatures[i] = temp;
         printf("cell_temps[%d]: %.0fC\n", i, bmsData.temperatures[i]);
 	}
-	return 1;    
 } // parseBmsResponseTemp()
 
 
@@ -170,7 +168,7 @@ static int GETBIT(unsigned char byte, int index) {
     return (byte >> index) & 1;
 }
 
-static int parseBmsResponseOther( char *pResponse, int len )
+static void parseBmsResponseOther( unsigned char *pResponse, int len )
 {
 	// len should be 119, response 0X9B, Other Data
 	int iValue, i;
@@ -300,25 +298,3 @@ static int parseBmsResponseOther( char *pResponse, int len )
     }
 
 } // parseBmsResponseOther()
-
-static int parseBmsResponseBatteryFailureStatus(unsigned char *pResponse) {
-    // Data bits start at index 4
-    // Alarms' are stored in reverse bit order. I.e. alarms[i][0] is the alarm of the ith byte, last bit
-
-    char alarms[8][9];  // 8 bytes, each with 8 bits + null-terminator
-    
-    for (int i = 0; i < 8; ++i) {
-        int byte = pResponse[4 + i] & 0xFF;  // start from pResponse[4]
-        char *currentString = alarms[i];
-        
-        for (int j = 7; j >= 0; --j) {  // loop through each bit in byte
-            currentString[j] = ((byte >> j) & 1) ? '1' : '0';
-        }
-        currentString[8] = '\0';  // null-terminate the string
-    }
-    
-    for (int i = 0; i < 8; ++i) {
-        strcpy(bmsData.alarms[i], alarms[i]);
-        printf("Binary string for byte %d: %s\n", i, alarms[i]);
-    }
-}

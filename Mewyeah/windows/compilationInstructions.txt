@@ -1,0 +1,3 @@
+To compile for Mewyeah Windows:
+
+gcc -std=c99 -o EPDataLogMewyeahWindows connection.c getData.c main.c
