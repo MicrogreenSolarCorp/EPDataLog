@@ -1,0 +1,10 @@
+To compile for Mewyeah Windows:
+
+cd /Mewyeah/windows
+gcc -std=c99 -o EPDataLogMewyeahWindows connection.c ../common/getData.c main.c
+
+
+To compile for Daly Windows:
+
+cd /Daly/windows
+gcc -std=c99 -o EPDataLogDalyWindows connection.c ../common/getData.c main.c

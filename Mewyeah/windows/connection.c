@@ -21,7 +21,7 @@ int isInteger(char *str) {
 }
 
 // Function to set up the COM port
-HANDLE setupCOMPort(int portNumber) {
+HANDLE setupCOMPort(int portNumber, unsigned char *queryData, unsigned char *expectedResponse) {
     if (portNumber != -1) {
         char comPortName[10];  // Enough space for "COM" + up to 3 digits + null terminator
         sprintf(comPortName, "COM%d", portNumber);  // Format the COM port name
@@ -29,8 +29,6 @@ HANDLE setupCOMPort(int portNumber) {
         HANDLE hComm = connectToCOMPort(comPortName);
         Sleep(500);
         if (hComm != INVALID_HANDLE_VALUE) {
-            // Use pRequestVolt as queryData
-            const unsigned char queryData[9] = {0XEB, 0X90, 0X1F, 0X04, 0X07, 0x9A, 0x00, 0x00, 0x79};
             DWORD bytesWritten;
 
             // Send a query
@@ -51,7 +49,7 @@ HANDLE setupCOMPort(int portNumber) {
             }
 
             // Check the response
-            if (buffer[0] == 0xEB && buffer[1] == 0x90 && buffer[2] == 0x1F) {
+            if (buffer[0] == expectedResponse[0] && buffer[1] == expectedResponse[1]  && buffer[2] == expectedResponse[2]) {
                 printf("Found the target COM port: %s\n", comPortName);
                 return hComm;
             }
@@ -70,8 +68,6 @@ HANDLE setupCOMPort(int portNumber) {
             HANDLE hComm = connectToCOMPort(comPortName);
             Sleep(500);
             if (hComm != INVALID_HANDLE_VALUE) {
-                // Use pRequestVolt as queryData
-                const unsigned char queryData[9] = {0XEB, 0X90, 0X1F, 0X04, 0X07, 0x9A, 0x00, 0x00, 0x79};
                 DWORD bytesWritten;
 
                 // Send a query
@@ -92,7 +88,7 @@ HANDLE setupCOMPort(int portNumber) {
                 }
 
                 // Check the response
-                if (buffer[0] == 0xEB && buffer[1] == 0x90 && buffer[2] == 0x1F) {
+                if (buffer[0] == expectedResponse[0] && buffer[1] == expectedResponse[1]  && buffer[2] == expectedResponse[2]) {
                     printf("Found the target COM port: %s\n", comPortName);
                     return hComm;
                 }

@@ -753,7 +753,7 @@ int outputBMSDataToCsv(FILE *fp) {
 
     printf("Data written to csv file\n");
 
-    return 0;
+    return 0; 
 }
 
 

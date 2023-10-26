@@ -23,7 +23,7 @@ extern int g_delay_time_ms;
 
 // Function Prototypes
 int isInteger(char *str);
-HANDLE setupCOMPort(int portNumber);
+HANDLE setupCOMPort(int portNumber, unsigned char *queryData, unsigned char *expectedResponse);
 HANDLE connectToCOMPort(const char *portName);
 int readProgramParams(int argc, char *argv[]);
 FILE *openCsvFile();
