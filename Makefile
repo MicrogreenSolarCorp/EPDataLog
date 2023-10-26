@@ -1,47 +1,47 @@
-CC = gcc
-CFLAGS = -std=c99 -Wall -mconsole
-LDFLAGS = -mconsole -lkernel32
+# The name of the source files
+SOURCES = connection.c main.c ../common/getData.c
 
-# Default directories for sources and objects
-COMMON_SRC_DIR = common
-WINDOWS_SRC_DIR = windows
-MACOS_SRC_DIR = macos
+# The name of the executable
+EXE = results
 
-# Default software version and platform
-VERSION = Mewyeah
-PLATFORM = windows
+# Flags for compilation (adding warnings are always good)
+CFLAGS = -Wall
 
-# Determine the platform-specific file extensions and clean command
-ifeq ($(OS),Windows_NT)
-    EXECUTABLE_SUFFIX = .exe
-    CLEAN_CMD = del
-else
-    EXECUTABLE_SUFFIX =
-    CLEAN_CMD = rm -f
-endif
+# Flags for linking (none for the moment)
+LDFLAGS =
 
-# Directories where source files are located
-COMMON_SRC = $(VERSION)/$(COMMON_SRC_DIR)
-PLATFORM_SRC = $(VERSION)/$(PLATFORM_SRC_DIR)
+# Libraries to link with (none for the moment)
+LIBS =
 
-# Source files
-COMMON_SOURCES = $(wildcard $(COMMON_SRC)/*.c)
-PLATFORM_SOURCES = $(wildcard $(PLATFORM_SRC)/*.c)
+# Use the GCC frontend program when linking
+LD = gcc
 
-# Object files
-COMMON_OBJECTS = $(COMMON_SOURCES:.c=.o)
-PLATFORM_OBJECTS = $(PLATFORM_SOURCES:.c=.o)
+# This creates a list of object files from the source files
+OBJECTS = $(SOURCES:%.c=%.o)
 
-# Determine the executable name based on version and platform
-EXECUTABLE = EPDataLog_$(VERSION)_$(PLATFORM)$(EXECUTABLE_SUFFIX)
+# The first target, this will be the default target if none is specified
+# This target tells "make" to make the "all" target
+default: all
 
-all: $(EXECUTABLE)
+# Having an "all" target is customary, so one could write "make all"
+# It depends on the executable program
+all: $(EXE)
 
-$(EXECUTABLE): $(COMMON_OBJECTS) $(PLATFORM_OBJECTS)
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
+# This will link the executable from the object files
+$(EXE): $(OBJECTS)
+	$(LD) $(LDFLAGS) $(OBJECTS) -o  $(EXE) $(LIBS)
 
+# This is a target that will compile all needed source files into object files
+# We specify the compiler (CC) and compilation flags (CFLAGS)
 %.o: %.c
-	$(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS) -c $< -o $@
 
+# Target to clean up after us
 clean:
-	$(CLEAN_CMD) $(EXECUTABLE) $(COMMON_OBJECTS) $(PLATFORM_OBJECTS)
+	-rm -f $(EXE)      # Remove the executable file
+	-rm -f $(OBJECTS)  # Remove the object files
+
+# Finally we need to tell "make" what source and header file each object file depends on
+getData.o: getData.c getData.h
+connection.o: connection.c connection.h ../common/getData.h
+main.o: main.c connection.h ../common/getData.h
