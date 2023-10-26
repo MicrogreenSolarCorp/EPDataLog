@@ -7,7 +7,7 @@ Batch File for Mewyeah BMS Data Logging on Microgreen EnergyPak Battery
 
 Description
 -----------
-This batch file is designed to facilitate data logging from a Microgreen EnergyPak Battery equipped with a Mewyeah Battery Management System (BMS). The script employs the "EPDataLogMewyeah.exe" executable, offering options to customize the time interval between logs and the COM port for device communication. 
+This batch file is designed to facilitate data logging from a Microgreen EnergyPak Battery equipped with a Mewyeah Battery Management System (BMS). The script employs the "EPDataLogMewyeahWindows.exe" executable, offering options to customize the time interval between logs and the COM port for device communication. 
 
 The program generates a .csv file, naming it according to the current timestamp. As long as the program window remains open, it will continuously read and log data from the BMS to this .csv file.
 
@@ -41,6 +41,6 @@ Example
 -------
 To perform data logging every 5000 ms through COM3, modify the batch file to include:
 
-  EPDataLogMewyeah.exe -t 5000 -c 3
+  EPDataLogMewyeahWindows.exe -t 5000 -c 3
 
 --------------------------------------------------------------
