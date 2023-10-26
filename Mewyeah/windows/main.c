@@ -6,7 +6,9 @@
 
 
 
-// Global arrays:
+// Global variables:
+#define BAUD_RATE 38400
+
 // Use pRequestVolt as queryData
 unsigned char connectionQueryData[] = {0XEB, 0X90, 0X1F, 0X04, 0X07, 0x9A, 0x00, 0x00, 0x79};
 unsigned char expectedConnectionQueryResponse[] = {0XEB, 0X90, 0X1F};
@@ -20,7 +22,7 @@ int main(int argc, char *argv[]) {
         return 1; // Invalid COM port number or delay time supplied.
     }
 
-    HANDLE hComm = setupCOMPort(comPort, connectionQueryData, expectedConnectionQueryResponse, sizeof(connectionQueryData));
+    HANDLE hComm = setupCOMPort(comPort, BAUD_RATE, connectionQueryData, expectedConnectionQueryResponse, sizeof(connectionQueryData));
 
     if (hComm == INVALID_HANDLE_VALUE) return 1; // Could not open COM port.
 

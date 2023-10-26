@@ -1,8 +1,16 @@
-#include "connection.h"
+#include "../../common/windows/connection.h"
+#include "../../common/windows/outputToCsv.h"
 #include "../common/getData.h"
 #include <windows.h>
 #include <stdio.h>
 
+
+// Global variables:
+#define BAUD_RATE 9600
+
+// Use pRequestVolt as queryData
+const unsigned char connectionQueryData[] = {0XA5, 0X40, 0X90, 0X08, 0X00, 0X00, 0x00, 0x00, 0X00, 0X00, 0X00, 0X00, 0x7D};
+const unsigned char expectedConnectionQueryResponse[] = {0XA5, 0X01, 0X90};
 
 int main(int argc, char *argv[]) {
     bmsData.lineNumber = 1;
@@ -12,7 +20,7 @@ int main(int argc, char *argv[]) {
         return 1; // Invalid COM port number or delay time supplied.
     }
 
-    HANDLE hComm = setupCOMPort(comPort);
+    HANDLE hComm = setupCOMPort(comPort, BAUD_RATE, connectionQueryData, expectedConnectionQueryResponse, sizeof(connectionQueryData));
 
     if (hComm == INVALID_HANDLE_VALUE) return 1; // Could not open COM port.
 
