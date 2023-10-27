@@ -1,4 +1,5 @@
 .vscode
+.DS_Store
 
 /Daly/windows/*.csv
 /Daly/macos/*.csv
