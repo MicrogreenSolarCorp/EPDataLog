@@ -16,5 +16,12 @@ cd ./Mewyeah/macos
 gcc -std=c99 -o EPDataLogMewyeahMacOS ../../common/macos/connection.c ../../common/macos/outputToCsv.c ../common/getData.c main.c
 
 
+To compile for Daly MacOS:
+
+cd ./Daly/macos
+gcc -std=c99 -o EPDataLogDalyMacOS ../../common/macos/connection.c ../../common/macos/outputToCsv.c ../common/getData.c main.c
+
+
+
 git tag -a Daly-Windows-v1.0.0 -m "Released Daly Windows 1.0.0"
 git push origin Daly-Windows-v1.0.0

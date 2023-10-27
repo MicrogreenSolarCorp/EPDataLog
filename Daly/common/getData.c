@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <time.h>
 #include <string.h>
-#include <windows.h>
 
 int g_number_of_battery_cells = -1;
 int g_number_of_temp_sensors = -1;
@@ -10,7 +9,7 @@ int g_number_of_temp_sensors = -1;
 BMSData bmsData; // Declare a BMSData struct variable
 // Forward declarations of static functions
 void getDateTime();
-int getBMSData(HANDLE hComm, int requestType);
+int getBMSData(CommHandle hComm, int requestType);
 void parseBmsResponseSoc(unsigned char *pResponse);
 void parseBmsResponseHighestLowestVoltage(unsigned char *pResponse);
 void parseBmsResponseMaxMinTemp(unsigned char *pResponse);
@@ -44,7 +43,7 @@ void getDateTime() {
 }
 
 
-int getBMSData(HANDLE hComm, int requestType) {
+int getBMSData(CommHandle hComm, int requestType) {
     const int REQ_LEN = 13;
     const unsigned char REQUEST_TOTAL_VOLTAGE_CURRENT_SOC[13] = {0XA5, 0X40, 0X90, 0X08, 0X00, 0X00, 0x00, 0x00, 0X00, 0X00, 0X00, 0X00, 0x7D};
     const unsigned char REQUEST_HIGHEST_LOWEST_VOLTAGE[13] = {0XA5, 0X40, 0X91, 0X08, 0X00, 0X00, 0x00, 0x00, 0X00, 0X00, 0X00, 0X00, 0x7E};
@@ -92,25 +91,37 @@ int getBMSData(HANDLE hComm, int requestType) {
     }
 
     const int MAX_RETRY = 1;
-    DWORD bytesWritten;
 
     for (int i = 0; i < MAX_RETRY; i++) {
-        
-        BOOL status = WriteFile(hComm, pRequest, REQ_LEN, &bytesWritten, NULL);
+        int nBytesWritten, nBytesRead;
 
-        if (status) {
-            printf("Data written to port, %lu bytes\n", bytesWritten);
+        #ifdef _WIN32
+        DWORD bytesWritten;
+        WriteFile(hComm, pRequest, REQ_LEN, &bytesWritten, NULL);
+        nBytesWritten = bytesWritten;
+        #else  // macOS and other Unix-like systems
+        nBytesWritten = (int) write(hComm, pRequest, REQ_LEN);
+        #endif
+
+        if (nBytesWritten > 0) {
+            printf("Data written to port, %d bytes\n", nBytesWritten);
         } else {
             printf("Could not write data to port\n");
         }
 
-
+        #ifdef _WIN32
         DWORD bytesRead;
-        status = ReadFile(hComm, pResponse, sizeof(pResponse), &bytesRead, NULL);
+        ReadFile(hComm, pResponse, sizeof(pResponse), &bytesRead, NULL);
+        nBytesRead = bytesRead;
+        #else  // macOS and other Unix-like systems
+        usleep(100000);  // Sleep for 100 ms to reduce CPU usage, adjust as necessary
+        nBytesRead = (int) read(hComm, pResponse, sizeof(pResponse));
+        usleep(100000);  // Sleep for 100 ms to reduce CPU usage, adjust as necessary
+        #endif
 
-        if (status) {
+        if (nBytesRead > 0) {
             printf("Data read from port: ");
-            for (int i = 0; i < bytesRead; i++) {
+            for (int i = 0; i < nBytesRead; i++) {
                 printf("%02X ", pResponse[i]);
             }
             printf("\n");
@@ -150,6 +161,7 @@ int getBMSData(HANDLE hComm, int requestType) {
                 return 0;
         }
     }
+    return 0;
 
 }
 
@@ -341,7 +353,7 @@ void parseBmsResponseSingleCellBalancingStatus(unsigned char *pResponse) {
     // Data bits start at index 4
     // Balance Status' are stored in reverse order. I.e. balance_status[0] is the balance status of the last cell
 
-    boolean isBalancing = 0;
+    int isBalancing = 0;
 
     for (int i = g_number_of_battery_cells - 1; i >= 0; i--) {
         isBalancing = isBalancing || pResponse[4 + i];

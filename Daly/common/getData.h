@@ -3,7 +3,16 @@
 #ifndef GETDATA_H
 #define GETDATA_H
 
+#ifdef _WIN32  // This is defined for both 32 and 64 bit Windows
 #include <windows.h>
+typedef HANDLE CommHandle;
+#else  // macOS and other Unix-like systems
+#include <unistd.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <termios.h>
+typedef int CommHandle;
+#endif
 
 #define READ_BAT_TOTAL_VOLTAGE_CURRENT_SOC		    0x90
 #define READ_BAT_HIGHEST_LOWEST_VOLTAGE		        0x91
@@ -43,7 +52,7 @@ typedef struct {
 extern BMSData bmsData;
 
 void getDateTime();
-int getBMSData(HANDLE hComm, int requestType);
+int getBMSData(CommHandle hComm, int requestType);
 static void parseBmsResponseSoc(unsigned char *pResponse);
 static void parseBmsResponseHighestLowestVoltage(unsigned char *pResponse);
 static void parseBmsResponseMaxMinTemp(unsigned char *pResponse);
