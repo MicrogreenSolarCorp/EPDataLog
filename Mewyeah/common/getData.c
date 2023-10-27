@@ -4,10 +4,20 @@
 #include <string.h>
 #include <windows.h>
 
+// Use cross platform code for COM port handling
+#ifdef _WIN32  // This is defined for both 32 and 64 bit Windows
+#include <windows.h>
+typedef HANDLE CommHandle;
+#else  // macOS and other Unix-like systems
+#include <unistd.h>
+#include <fcntl.h>
+typedef int CommHandle;
+#endif
+
 BMSData bmsData; // Declare a BMSData struct variable
 // Forward declarations of static functions
 void getDateTime();
-int getBMSData(HANDLE hComm, int requestType);
+int getBMSData(CommHandle hComm, int requestType);
 static void parseBmsResponseVolt(unsigned char *pResponse, int len);
 static void parseBmsResponseOther(unsigned char *pResponse, int len);
 static void parseBmsResponseBal(unsigned char *pResponse, int len);
@@ -33,7 +43,7 @@ void getDateTime() {
     printf("\n\nCurrent Time: %s\n", bmsData.dateTime);
 }
 
-int getBMSData(HANDLE hComm, int requestType) {
+int getBMSData(CommHandle hComm, int requestType) {
     const int REQ_LEN = 9;
     const unsigned char pRequestVolt[9]  = {0XEB, 0X90, 0X1F, 0X04, 0X07, 0x9A, 0x00, 0x00, 0x79};
     const unsigned char pRequestOther[9] = {0XEB, 0X90, 0X1F, 0X04, 0X07, 0x9B, 0x00, 0x00, 0x78};
@@ -61,23 +71,34 @@ int getBMSData(HANDLE hComm, int requestType) {
     }
 
     const int MAX_RETRY = 3;
-    DWORD bytesWritten;
 
     for (int i = 0; i < MAX_RETRY; i++) {
         
-        BOOL status = WriteFile(hComm, pRequest, REQ_LEN, &bytesWritten, NULL);
+        int nBytesWritten, nBytesRead;
 
-        if (status) {
+        #ifdef _WIN32
+        DWORD bytesWritten;
+        WriteFile(hComm, pRequest, REQ_LEN, &bytesWritten, NULL);
+        nBytesWritten = bytesWritten;
+        #else  // macOS and other Unix-like systems
+        // REPLACE WITH MAC WRITE
+        #endif
+
+        if (bytesWritten > 0) {
             printf("Data written to port, %lu bytes\n", bytesWritten);
         } else {
             printf("Could not write data to port\n");
         }
 
-
+        #ifdef _WIN32
         DWORD bytesRead;
-        status = ReadFile(hComm, pResponse, sizeof(pResponse), &bytesRead, NULL);
+        ReadFile(hComm, pResponse, sizeof(pResponse), &bytesRead, NULL);
+        nBytesRead = bytesRead;
+        #else  // macOS and other Unix-like systems
+        // REPLACE WITH MAC WRITE
+        #endif
 
-        if (status) {
+        if (nBytesRead > 0) {
             printf("Data read from port: ");
             for (int i = 0; i < bytesRead; i++) {
                 printf("%02X ", pResponse[i]);
