@@ -1,5 +1,5 @@
 // File: getData.h
-// Description: Headers of functions for parsing BMS data.
+// Description: Headers of functions for setting getting and parsing data for Daly BMS.
 #ifndef GETDATA_H
 #define GETDATA_H
 

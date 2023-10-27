@@ -1,3 +1,5 @@
+// File: getData.c
+// Description: Implementation of functions for setting getting and parsing data for Daly BMS.
 #include "getData.h"  // Include the corresponding header file
 #include <stdio.h>
 #include <time.h>

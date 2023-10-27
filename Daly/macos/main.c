@@ -1,3 +1,5 @@
+// File: main.c
+// Description: Main file for Daly MacOS program.
 #include "../../common/macos/connection.h"
 #include "../../common/macos/outputToCsv.h"
 #include "../common/getData.h"
