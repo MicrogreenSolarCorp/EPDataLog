@@ -7,9 +7,8 @@
 #include <stdio.h>
 
 // Constants
-#define HMI_COMM_BAUD       38400 
 #define MIN_DELAY_TIME 0
-#define MAX_COM_PORT_NUMBER 256
+#define MAX_COM_PORT_NUMBER 10
 #define MIN_COM_PORT_NUMBER 1
 
 #define INVALID_COM_PORT_NUMBER -2

@@ -9,12 +9,25 @@
 // Global Vars
 int g_delay_time_ms = 2000;
 
+// Function to check if a string is an integer
+int isInteger(char *str) {
+    char *endptr;
+    strtol(str, &endptr, 10);
+    if (endptr == str) {
+        return 0;  // No conversion performed
+    }
+    if (*endptr != '\0') {
+        return 0;  // String is partially a valid integer
+    }
+    return 1;
+}
+
 int setupSerialPort(const int portNumber, const int baudRate, const unsigned char *queryData, const unsigned char *expectedResponse, const int dataLength) {
-    char portName[30];  // Enough space for "/dev/tty.usbserial" + up to 2 digits + null terminator
+    char portName[30];  // Enough space for "/dev/tty.usbserial-" + up to 2 digits + null terminator
 
     if (portNumber != -1) {
         // Format the specified port name
-        sprintf(portName, "/dev/tty.usbserial%d", portNumber);
+        sprintf(portName, "/dev/tty.usbserial-%d", portNumber);
         int fd = connectToSerialPort(portName, baudRate, queryData, expectedResponse, dataLength);
         if (fd != -1) {
             // Write the query
@@ -132,4 +145,61 @@ int connectToSerialPort(const char *device, const int baudRate, const unsigned c
     tcsetattr(fd, TCSANOW, &options);
 
     return fd;
+}
+
+
+// Returns the supplied COM port number, or -1 if none was supplied
+int readProgramParams(int argc, char *argv[]) {
+    int suppliedComPortNumber = NO_COM_PORT_NUMBER_SUPPLIED;
+    int suppliedDelayTime = NO_DELAY_TIME_SUPPLIED;
+
+    // Try to read the COM port number from the command line
+    for (int i = 1; i < argc; i++) {  // Starting at 1 to skip the program name itself
+        if (strcmp(argv[i], "-c") == 0) {
+            if (i + 1 < argc) {  // Make sure we don't go out of bounds
+                if (!isInteger(argv[i + 1])) {
+                    printf("Error: Invalid value for -c option. Aborting\n");
+                    return INVALID_COM_PORT_NUMBER;
+                }
+                suppliedComPortNumber = atoi(argv[++i]);  // Convert next argument to integer and assign to t_value
+                // Handle Error checking for com port number time
+                if (suppliedComPortNumber < MIN_COM_PORT_NUMBER) {
+                    printf("Error: COM port number cannot be less than %d. Aborting\n", MIN_COM_PORT_NUMBER);
+                    suppliedComPortNumber = INVALID_COM_PORT_NUMBER;
+                } else if (suppliedComPortNumber > MAX_COM_PORT_NUMBER) {
+                    printf("Error: COM port number cannot be greater than %d. Aborting\n", MAX_COM_PORT_NUMBER);
+                    suppliedComPortNumber = INVALID_COM_PORT_NUMBER;
+                }
+            } else {
+                printf("Error: Missing value for -c option\n");
+            }
+    // Try to read the delay time from the command line
+        } else if (strcmp(argv[i], "-t") == 0) {
+            if (i + 1 < argc) {  // Make sure we don't go out of bounds
+                if (!isInteger(argv[i + 1])) {
+                    printf("Error: Invalid value for -t option\n");
+                    continue;
+                }
+                suppliedDelayTime = atoi(argv[++i]);  // Convert next argument to integer and assign to c_value
+                // Handle Error checking for delay time
+                if (suppliedDelayTime < MIN_DELAY_TIME) {
+                    printf("Error: Delay time cannot be less than %d. Aborting\n", MIN_DELAY_TIME);
+                    return INVALID_DELAY_TIME_SUPPLIED;
+                } else {
+                    g_delay_time_ms = suppliedDelayTime;
+                    printf("Success: Delay time of %dms set\n", g_delay_time_ms);
+                }
+
+            } else {
+                printf("Error: Missing value for -t option\n");
+            }
+        }
+    }
+
+    if (suppliedDelayTime == NO_DELAY_TIME_SUPPLIED) {
+        printf("No delay time supplied. Using default delay time of %dms\n", g_delay_time_ms);
+    }
+
+    return suppliedComPortNumber;
+
 }

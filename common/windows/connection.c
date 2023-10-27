@@ -65,7 +65,7 @@ HANDLE setupCOMPort(int portNumber, const int baudRate, const unsigned char *que
         for (int i = 1; i <= 3; i++) { // Run through 3 scans from COM1 to COM10
             printf("\nScan #%d \n", i);
 
-            for (int i = 1; i <= 10; ++i) {
+            for (int i = MIN_COM_PORT_NUMBER; i <= MAX_COM_PORT_NUMBER; ++i) {
                 char comPortName[10];  // Enough space for "COM" + up to 3 digits + null terminator
                 sprintf(comPortName, "COM%d", i);  // Format the COM port name
                 HANDLE hComm = connectToCOMPort(comPortName, baudRate);

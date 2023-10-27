@@ -20,9 +20,13 @@ unsigned char expectedConnectionQueryResponse[] = {0XEB, 0X90, 0X1F};
 int main(int argc, char *argv[]) {
     bmsData.lineNumber = 1;
 
-    const char *device = "/dev/tty.usbserial-10"; // Replace with your device name
+    int serialPortNumber = NO_COM_PORT_NUMBER_SUPPLIED;
+    serialPortNumber = readProgramParams(argc, argv);
+    if (serialPortNumber == INVALID_COM_PORT_NUMBER || serialPortNumber == INVALID_DELAY_TIME_SUPPLIED) {
+        return 1; // Invalid serial port number or delay time supplied.
+    }
 
-    int fd = setupSerialPort(-1, BAUD_RATE, connectionQueryData, expectedConnectionQueryResponse, sizeof(connectionQueryData));
+    int fd = setupSerialPort(serialPortNumber, BAUD_RATE, connectionQueryData, expectedConnectionQueryResponse, sizeof(connectionQueryData));
     if (fd == -1) {
         return 1;
     }
