@@ -1,27 +1,33 @@
-To compile for Mewyeah Windows:
+# Project Build and Release Instructions
 
+## Compilation Instructions
+
+### For Mewyeah Windows:
+```bash
 cd ./Mewyeah/windows
 gcc -std=c99 -o EPDataLogMewyeahWindows ../../common/windows/connection.c ../../common/windows/outputToCsv.c ../common/getData.c main.c
+```
 
-
-To compile for Daly Windows:
-
+### For Daly Windows:
+```bash
 cd ./Daly/windows
 gcc -std=c99 -o EPDataLogDalyWindows ../../common/windows/connection.c ../../common/windows/outputToCsv.c ../common/getData.c main.c
+```
 
-
-To compile for Mewyeah MacOS:
-
+### For Mewyeah MacOS:
+```bash
 cd ./Mewyeah/macos
 gcc -std=c99 -o EPDataLogMewyeahMacOS ../../common/macos/connection.c ../../common/macos/outputToCsv.c ../common/getData.c main.c
+```
 
-
-To compile for Daly MacOS:
-
+### For Daly MacOS:
+```bash
 cd ./Daly/macos
 gcc -std=c99 -o EPDataLogDalyMacOS ../../common/macos/connection.c ../../common/macos/outputToCsv.c ../common/getData.c main.c
+```
 
-
-
+## Version Tagging and Pushing
+```
 git tag -a Daly-Windows-v1.0.0 -m "Released Daly Windows 1.0.0"
 git push origin Daly-Windows-v1.0.0
+```
