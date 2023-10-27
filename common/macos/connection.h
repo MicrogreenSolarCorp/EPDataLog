@@ -1,3 +1,5 @@
+// File: connection.h
+// Description: Headers of functions for setting up the Serial port connection for MacOS.
 #ifndef CONNECTION_H
 #define CONNECTION_H
 

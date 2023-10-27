@@ -1,3 +1,6 @@
+// File: connection.c
+// Description: Implementation of functions for setting up the Serial port connection for MacOS.
+
 #include "connection.h"
 #include <stdio.h>
 #include <string.h>
