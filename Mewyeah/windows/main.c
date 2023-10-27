@@ -1,3 +1,6 @@
+// File: main.c
+// Description: Main file for Mewyeah Windows program.
+
 #include "../../common/windows/connection.h"
 #include "../../common/windows/outputToCsv.h"
 #include "../common/getData.h"

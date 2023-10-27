@@ -1,3 +1,6 @@
+// File: main.c
+// Description: Main file for Mewyeah MacOS program.
+
 #include "../../common/macos/connection.h"
 #include "../../common/macos/outputToCsv.h"
 #include "../common/getData.h"
