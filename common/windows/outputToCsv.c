@@ -3,6 +3,7 @@
 
 #include "outputToCsv.h"  // Include the header file for this source file
 #include "../../Mewyeah/common/getData.h"
+#include <string.h>
 
 // Function to open the CSV file
 FILE *openCsvFile() {
@@ -41,7 +42,7 @@ FILE *openCsvFile() {
 }
 
 // Function to print the CSV header
-int printCsvHeader(FILE *fp) {
+void printCsvHeader(FILE *fp) {
     fprintf(fp, "Line #, Timestamp, Battery ID, Current (A), Voltage (V), State Of Charge (%%), Total Capacity, Remaining Capacity (AH),");
     
     // Print cell voltage headers
@@ -67,7 +68,7 @@ int printCsvHeader(FILE *fp) {
 }
 
 // Function to output BMS data to CSV
-int outputBMSDataToCsv(FILE *fp) {
+void outputBMSDataToCsv(FILE *fp) {
     // Write data
     fprintf(fp, "%d, %s, %d, %.2f, %.2f, %.2f, %.2f, %.2f, ", 
             bmsData.lineNumber,
@@ -125,5 +126,4 @@ int outputBMSDataToCsv(FILE *fp) {
 
     printf("Data written to csv file\n");
 
-    return 0;
 }

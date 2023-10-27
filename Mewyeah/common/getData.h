@@ -3,7 +3,16 @@
 #ifndef GETDATA_H
 #define GETDATA_H
 
+#ifdef _WIN32  // This is defined for both 32 and 64 bit Windows
 #include <windows.h>
+typedef HANDLE CommHandle;
+#else  // macOS and other Unix-like systems
+#include <unistd.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <termios.h>
+typedef int CommHandle;
+#endif
 
 #define READ_BAT_VOLTAGE 0x9A
 #define READ_BAT_OTHER   0x9B
@@ -37,10 +46,10 @@ typedef struct {
 extern BMSData bmsData;
 
 void getDateTime();
-int getBMSData(HANDLE hComm, int requestType);
-static void parseBmsResponseVolt(unsigned char *pResponse, int len);
-static void parseBmsResponseOther(unsigned char *pResponse, int len);
-static void parseBmsResponseBal(unsigned char *pResponse, int len);
-static void parseBmsResponseTemp(unsigned char *pResponse, int len);
+int getBMSData(CommHandle hComm, int requestType);
+void parseBmsResponseVolt(unsigned char *pResponse, int len);
+void parseBmsResponseOther(unsigned char *pResponse, int len);
+void parseBmsResponseBal(unsigned char *pResponse, int len);
+void parseBmsResponseTemp(unsigned char *pResponse, int len);
 
 #endif // GETDATA_H

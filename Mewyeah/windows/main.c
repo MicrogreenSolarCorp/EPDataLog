@@ -16,11 +16,12 @@ unsigned char expectedConnectionQueryResponse[] = {0XEB, 0X90, 0X1F};
 
 int main(int argc, char *argv[]) {
     bmsData.lineNumber = 1;
-    int comPort = NO_COM_PORT_NUMBER_SUPPLIED;
-    comPort = readProgramParams(argc, argv);
-    if (comPort == INVALID_COM_PORT_NUMBER || comPort == INVALID_DELAY_TIME_SUPPLIED) {
-        return 1; // Invalid COM port number or delay time supplied.
-    }
+    
+    // int comPort = NO_COM_PORT_NUMBER_SUPPLIED;
+    // comPort = readProgramParams(argc, argv);
+    // if (comPort == INVALID_COM_PORT_NUMBER || comPort == INVALID_DELAY_TIME_SUPPLIED) {
+    //     return 1; // Invalid COM port number or delay time supplied.
+    // }
 
     HANDLE hComm = setupCOMPort(comPort, BAUD_RATE, connectionQueryData, expectedConnectionQueryResponse, sizeof(connectionQueryData));
 

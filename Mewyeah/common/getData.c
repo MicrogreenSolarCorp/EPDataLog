@@ -2,26 +2,15 @@
 #include <stdio.h>
 #include <time.h>
 #include <string.h>
-#include <windows.h>
-
-// Use cross platform code for COM port handling
-#ifdef _WIN32  // This is defined for both 32 and 64 bit Windows
-#include <windows.h>
-typedef HANDLE CommHandle;
-#else  // macOS and other Unix-like systems
-#include <unistd.h>
-#include <fcntl.h>
-typedef int CommHandle;
-#endif
 
 BMSData bmsData; // Declare a BMSData struct variable
-// Forward declarations of static functions
+// Forward declarations of functions
 void getDateTime();
 int getBMSData(CommHandle hComm, int requestType);
-static void parseBmsResponseVolt(unsigned char *pResponse, int len);
-static void parseBmsResponseOther(unsigned char *pResponse, int len);
-static void parseBmsResponseBal(unsigned char *pResponse, int len);
-static void parseBmsResponseTemp(unsigned char *pResponse, int len);
+void parseBmsResponseVolt(unsigned char *pResponse, int len);
+void parseBmsResponseOther(unsigned char *pResponse, int len);
+void parseBmsResponseBal(unsigned char *pResponse, int len);
+void parseBmsResponseTemp(unsigned char *pResponse, int len);
 
 void getDateTime() {
     // Get current date and time
@@ -81,11 +70,11 @@ int getBMSData(CommHandle hComm, int requestType) {
         WriteFile(hComm, pRequest, REQ_LEN, &bytesWritten, NULL);
         nBytesWritten = bytesWritten;
         #else  // macOS and other Unix-like systems
-        // REPLACE WITH MAC WRITE
+        nBytesWritten = (int) write(hComm, pRequest, REQ_LEN);
         #endif
 
-        if (bytesWritten > 0) {
-            printf("Data written to port, %lu bytes\n", bytesWritten);
+        if (nBytesWritten > 0) {
+            printf("Data written to port, %d bytes\n", nBytesWritten);
         } else {
             printf("Could not write data to port\n");
         }
@@ -95,28 +84,30 @@ int getBMSData(CommHandle hComm, int requestType) {
         ReadFile(hComm, pResponse, sizeof(pResponse), &bytesRead, NULL);
         nBytesRead = bytesRead;
         #else  // macOS and other Unix-like systems
-        // REPLACE WITH MAC WRITE
+        usleep(100000);  // Sleep for 100 ms to reduce CPU usage, adjust as necessary
+        nBytesRead = (int) read(hComm, pResponse, sizeof(pResponse));
+        usleep(100000);  // Sleep for 100 ms to reduce CPU usage, adjust as necessary
         #endif
 
         if (nBytesRead > 0) {
             printf("Data read from port: ");
-            for (int i = 0; i < bytesRead; i++) {
+            for (int i = 0; i < nBytesRead; i++) {
                 printf("%02X ", pResponse[i]);
             }
             printf("\n");
 
             switch( pResponse[7] ) {
                 case READ_BAT_VOLTAGE:
-                    parseBmsResponseVolt(pResponse, bytesRead);
+                    parseBmsResponseVolt(pResponse, nBytesRead);
                     break;
                 case READ_BAT_OTHER:
-                    parseBmsResponseOther(pResponse, bytesRead);
+                    parseBmsResponseOther(pResponse, nBytesRead);
                     break;
                 case READ_BAT_BAL:
-                    parseBmsResponseBal(pResponse, bytesRead);
+                    parseBmsResponseBal(pResponse, nBytesRead);
                     break;
                 case READ_BAT_TEMP:
-                    parseBmsResponseTemp(pResponse, bytesRead);
+                    parseBmsResponseTemp(pResponse, nBytesRead);
                     break;
                 default:
                     return 0;
@@ -130,8 +121,7 @@ int getBMSData(CommHandle hComm, int requestType) {
     return 0;
 }
 
-// Define static functions; these functions are internal to this file
-static void parseBmsResponseVolt( unsigned char *pResponse, int len )
+void parseBmsResponseVolt( unsigned char *pResponse, int len )
 {
 	// len should be 251, response 0x9A, Volt
     int i;
@@ -164,12 +154,12 @@ static void parseBmsResponseVolt( unsigned char *pResponse, int len )
 } // parseBmsResponseVolt()
 
 
-static void parseBmsResponseBal( unsigned char *pResponse, int len )
+void parseBmsResponseBal( unsigned char *pResponse, int len )
 {
     // Balancing Current is not needed in the data logger
 } // parseBmsResponseBal()
 
-static void parseBmsResponseTemp( unsigned char *pResponse, int len )
+void parseBmsResponseTemp( unsigned char *pResponse, int len )
 {
 	// len should be 191, response 0X9D, Temperature
     int temp, i;  
@@ -185,11 +175,11 @@ static void parseBmsResponseTemp( unsigned char *pResponse, int len )
 
 
 // Function to get a specific bit from a byte
-static int GETBIT(unsigned char byte, int index) {
+int GETBIT(unsigned char byte, int index) {
     return (byte >> index) & 1;
 }
 
-static void parseBmsResponseOther( unsigned char *pResponse, int len )
+void parseBmsResponseOther( unsigned char *pResponse, int len )
 {
 	// len should be 119, response 0X9B, Other Data
 	int iValue, i;

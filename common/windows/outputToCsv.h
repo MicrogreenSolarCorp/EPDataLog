@@ -8,7 +8,7 @@
 
 // Function Prototypes
 FILE *openCsvFile();
-int printCsvHeader(FILE *fp);
-int outputBMSDataToCsv(FILE *fp);
+void printCsvHeader(FILE *fp);
+void outputBMSDataToCsv(FILE *fp);
 
 #endif // OUTPUTTOCSV_H
