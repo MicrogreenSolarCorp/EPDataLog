@@ -9,8 +9,103 @@
 // Global Vars
 int g_delay_time_ms = 2000;
 
+int setupSerialPort(const int portNumber, const int baudRate, const unsigned char *queryData, const unsigned char *expectedResponse, const int dataLength) {
+    char portName[30];  // Enough space for "/dev/tty.usbserial" + up to 2 digits + null terminator
 
-int setupSerialPort(const char *device, int baudRate) {
+    if (portNumber != -1) {
+        // Format the specified port name
+        sprintf(portName, "/dev/tty.usbserial%d", portNumber);
+        int fd = connectToSerialPort(portName, baudRate, queryData, expectedResponse, dataLength);
+        if (fd != -1) {
+            // Write the query
+            int nBytesWritten = (int) write(fd, queryData, dataLength);
+            if (nBytesWritten > 0) {
+                printf("Data written to port %s, %d bytes\n", portName, nBytesWritten);
+            } else {
+                printf("Could not write data to port %s\n", portName);
+                close(fd);
+                return INVALID_PORT_VALUE;
+            }
+
+            // Sleep for a short duration to allow data to be received
+            usleep(100000);  // Sleep for 100 ms, adjust as necessary
+
+            // Read the response
+            unsigned char buffer[300];
+            int nBytesRead = (int) read(fd, buffer, sizeof(buffer));
+            if (nBytesRead > 0) {
+                printf("Read %d bytes from port %s\n", nBytesRead, portName);
+            } else {
+                printf("Could not read data from port %s\n", portName);
+                close(fd);
+                return INVALID_PORT_VALUE;
+            }
+
+            // Check the response
+            if (nBytesRead >= 3 && buffer[0] == expectedResponse[0] && buffer[1] == expectedResponse[1] && buffer[2] == expectedResponse[2]) {
+                printf("Found the target serial port: %s\n", portName);
+                return fd;  // Return the file descriptor if this is the target port
+            }
+
+            // Close the file descriptor if this isn't the correct port
+            close(fd);
+        }
+        printf("Unable to connect to the specified serial port: %s. Aborting.\n", portName);
+        return -1;
+    } else {
+        printf("No serial port number supplied. Searching for a serial port... \n");
+        for (int i = 1; i <= 3; i++) { // Run through 3 scans from COM1 to COM10
+            printf("\nScan #%d \n", i);
+
+            for (int i = 1; i <= 20; ++i) {
+                sprintf(portName, "/dev/tty.usbserial-%d", i);
+                printf("Trying port %s\n", portName);
+                int fd = connectToSerialPort(portName, baudRate, queryData, expectedResponse, dataLength);
+                usleep(500000);  // Sleep for 500 ms, adjust as necessary
+                if (fd != -1) {
+                    // Write the query
+                    int nBytesWritten = (int) write(fd, queryData, dataLength);
+                    if (nBytesWritten > 0) {
+                        printf("Data written to port %s, %d bytes\n", portName, nBytesWritten);
+                    } else {
+                        printf("Could not write data to port %s\n", portName);
+                        close(fd);
+                        continue;  // Skip to the next iteration if writing failed
+                    }
+
+                    // Sleep for a short duration to allow data to be received
+                    usleep(100000);  // Sleep for 100 ms, adjust as necessary
+
+                    // Read the response
+                    unsigned char buffer[300];
+                    int nBytesRead = (int) read(fd, buffer, sizeof(buffer));
+                    if (nBytesRead > 0) {
+                        printf("Read %d bytes from port %s\n", nBytesRead, portName);
+                    } else {
+                        printf("Could not read data from port %s\n", portName);
+                        close(fd);
+                        continue;  // Skip to the next iteration if reading failed
+                    }
+
+                    // Check the response
+                    if (nBytesRead >= 3 && buffer[0] == expectedResponse[0] && buffer[1] == expectedResponse[1] && buffer[2] == expectedResponse[2]) {
+                        printf("Found the target serial port: %s\n", portName);
+                        return fd;  // Return the file descriptor if this is the target port
+                    }
+
+                    // Close the file descriptor if this isn't the correct port
+                    close(fd);
+                }
+            }
+        }
+    }
+
+    printf("Unable to find the target serial port. Aborting.\n");
+    return INVALID_PORT_VALUE;
+}
+
+
+int connectToSerialPort(const char *device, const int baudRate, const unsigned char *queryData, const unsigned char *expectedResponse, const int dataLength) {
     int fd = open(device, O_RDWR | O_NOCTTY | O_NDELAY);
     if (fd == -1) {
         perror("open_port: Unable to open the serial port");

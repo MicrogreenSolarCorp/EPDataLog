@@ -63,7 +63,7 @@ HANDLE setupCOMPort(int portNumber, const int baudRate, const unsigned char *que
         printf("No COM port supplied. Searching for a COM port... \n");
 
         for (int i = 1; i <= 3; i++) { // Run through 3 scans from COM1 to COM10
-            printf("Scan #%d \n", i);
+            printf("\nScan #%d \n", i);
 
             for (int i = 1; i <= 10; ++i) {
                 char comPortName[10];  // Enough space for "COM" + up to 3 digits + null terminator

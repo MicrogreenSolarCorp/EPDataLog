@@ -17,6 +17,7 @@
 #define NO_COM_PORT_NUMBER_SUPPLIED -1
 #define NO_DELAY_TIME_SUPPLIED -1
 
+
 // Global Variables
 extern int g_delay_time_ms;
 

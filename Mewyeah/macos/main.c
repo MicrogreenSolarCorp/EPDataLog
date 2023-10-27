@@ -19,11 +19,10 @@ unsigned char expectedConnectionQueryResponse[] = {0XEB, 0X90, 0X1F};
 
 int main(int argc, char *argv[]) {
     bmsData.lineNumber = 1;
-    
-    const char *device = "/dev/tty.usbserial-10"; // Replace with your device name
-    int baudRate = B38400; // Replace with your desired baud rate
 
-    int fd = setupSerialPort(device, baudRate);
+    const char *device = "/dev/tty.usbserial-10"; // Replace with your device name
+
+    int fd = setupSerialPort(-1, BAUD_RATE, connectionQueryData, expectedConnectionQueryResponse, sizeof(connectionQueryData));
     if (fd == -1) {
         return 1;
     }
