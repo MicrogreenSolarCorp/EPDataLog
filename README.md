@@ -33,7 +33,9 @@ To modify the read interval or specify a COM port:
 #### Quickstart
 Open the folder and double-click on the program file to start data logging with default settings.
 
-### Custom Configuration
+
+
+### Custom Configuration Instructions
 
 #### Parameters
 - `-t [Interval Time(ms)]`: Specifies the time interval in milliseconds between two consecutive data logs. The default value is 5000 ms.
