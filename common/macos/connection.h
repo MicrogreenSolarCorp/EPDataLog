@@ -5,7 +5,6 @@
 
 #include <stdlib.h>
 
-#define HMI_COMM_BAUD       38400 
 #define MIN_DELAY_TIME 0
 #define MAX_COM_PORT_NUMBER 20
 #define MIN_COM_PORT_NUMBER 1
