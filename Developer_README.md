@@ -49,3 +49,6 @@ If changes need to be made to the BMS communication code, refer to the company's
 Refer to SampleLog.csv for an example of the output CSV file.
 
 Refer to Alarm Codes for a list of alarm codes and their meanings.
+[Mewyeah Alarm Codes](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/Mewyeah/Alarm%20Bit%20Codes.docx)
+
+[Daly Alarm Codes](INSERT LINK HERE)
