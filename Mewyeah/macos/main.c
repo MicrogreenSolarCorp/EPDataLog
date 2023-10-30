@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
     bmsData.lineNumber = 1;
 
     int serialPortNumber = NO_COM_PORT_NUMBER_SUPPLIED;
-    int delayTimeMs = 0;
+    int delayTimeMs = DEFAULT_DELAY_TIME_MS;
     int readProgramParamsReturnCode = readProgramParams(argc, argv, &serialPortNumber, &delayTimeMs);
 
     if (serialPortNumber == INVALID_COM_PORT_NUMBER || serialPortNumber == INVALID_DELAY_TIME_SUPPLIED) {
