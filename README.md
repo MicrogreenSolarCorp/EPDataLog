@@ -20,6 +20,9 @@ EPDataLog is a program designed to facilitate data logging from a Microgreen Ene
 #### Quickstart
 Simply open the unzipped folder and double-click on the `run.bat` file to start data logging with default settings.
 
+![windowsRun](URL)
+![windowsRunSuccess](URL)
+
 #### Custom Configuration
 To modify the read interval or specify a COM port:
 1. Right-click on `run.bat` and select "Open with" → "Notepad", or open Notepad and navigate to File → Open to select `run.bat`.
@@ -33,7 +36,8 @@ To modify the read interval or specify a COM port:
 #### Quickstart
 Open the folder and double-click on the program file to start data logging with default settings.
 
-
+![macosRun](URL)
+![macosRunSuccess](URL)
 
 ### Custom Configuration Instructions
 
