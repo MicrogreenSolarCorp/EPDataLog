@@ -8,10 +8,11 @@ EPDataLog is a program designed to facilitate data logging from a Microgreen Ene
 
 ## Installation
 
-1. Navigate to the [release page](https://github.com/MicrogreenSolarCorp/EPDataLog/releases).
-2. Select the latest release and expand the Assets dropdown menu.
-3. **Important:** Ensure you know the BMS version that your EnergyPak is using (Mewyeah or Daly). Download the corresponding zip file for your operating system and BMS version.
-4. Unzip the downloaded file.
+1. If you are on Windows, ensure you have the [CH340 Driver](https://learn.sparkfun.com/tutorials/how-to-install-ch340-drivers/all) installed. Scroll down under the Windows 7/10 header and click on CH341SER (EXE).This driver is required for the RS232-USB cable to work correctly. If you are on MacOS, the driver should be installed automatically.
+2. Navigate to the [release page](https://github.com/MicrogreenSolarCorp/EPDataLog/releases).
+3. Select the latest release and expand the Assets dropdown menu.
+4. **Important:** Ensure you know the BMS version that your EnergyPak is using (Mewyeah or Daly). Download the corresponding zip file for your operating system and BMS version.
+5. Unzip the downloaded file.
 
 ## Usage
 
@@ -45,12 +46,12 @@ Open the folder and double-click on the program file to start data logging with 
 - `-t [Interval Time(ms)]`: Specifies the time interval in milliseconds between two consecutive data logs. The default value is 5000 ms.
 - `-c [COM Port Number]`: Specifies the COM port number for device communication. If not specified, the script will auto-detect the correct COM port.
 
-#### Example
+#### Custom Configuration Example
 To perform data logging every 5000 ms through COM3, modify the batch file to include:
 ```bash
 EPDataLogMewyeahWindows.exe -t 5000 -c 3
 ```
 
-## Example
+## Sample Output
 Refer to [SampleLog.csv](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/SampleLog.csv) for an example of the output CSV file.
 
