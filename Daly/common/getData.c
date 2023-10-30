@@ -357,15 +357,22 @@ void parseBmsResponseSingleCellBalancingStatus(unsigned char *pResponse) {
 
     int isBalancing = 0;
 
-    for (int i = g_number_of_battery_cells - 1; i >= 0; i--) {
-        isBalancing = isBalancing || pResponse[4 + i];
-        bmsData.cellBalancingStatus[i] = pResponse[4 + i];
+
+    // 8 bits per byte
+    // Assuming 8 cells, we want 15 cells -> 2 bytes, 16 cells -> 2 bytes, 17 cells -> 3 bytes
+    int nBytesToRetrieve = (g_number_of_battery_cells - 1) / 8 + 1;
+    for (int i = 0; i <= nBytesToRetrieve; i++) { // 
+        unsigned char byte = pResponse[4 + i];
+        for (int j = 0; i < 8; j++) { // Loop through each byte
+            int bit = (byte >> j) & 1;
+            isBalancing = isBalancing || bit;
+            bmsData.cellBalancingStatus[i] = bit;
+        }
     }
 
     for (int i = 0; i < g_number_of_battery_cells; i++) {
         printf("bmsData.cellBalancingStatus[%d]: %d\n", i, bmsData.cellBalancingStatus[i]);
     }
-
 
     bmsData.balancingStatus = isBalancing;
 }
