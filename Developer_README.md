@@ -34,6 +34,8 @@ In EPDataLog/common/, we have two directories, macos and windows. These director
 - connecting to the BMS (MacOS uses serial port communication, Windows uses COM Port communication)
 - outputting data to a CSV file (MacOS requires extra configuration to get the correct file path)
 
+In EPDataLog/common/, there is also a file named readProgramParams.c. This file contains code for reading command line arguments. This file is shared between all 4 program versions.
+
 In EPDataLog/common/Daly and EPDataLog/common/Mewyeah, we have three directories, common, macos, windows.
 
 ### Common
@@ -41,7 +43,6 @@ In EPDataLog/common/Daly and EPDataLog/common/Mewyeah, we have three directories
 
 ### MacOS and Windows
 /macos and /windows contains code specific to MacOS and Windows respectively. Specifically, each directory contains the main.c file where the program starts.
-
 
 ## Useful Resources
 For instructions on compiling and releasing the code, refer to [Project_Build_And_Release_Instructions.md](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/Project_Build_And_Release_Instructions.md)
@@ -54,3 +55,6 @@ Refer to Alarm Codes for a list of alarm codes and their meanings.
 [Mewyeah Alarm Codes](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/Mewyeah/Alarm%20Bit%20Codes.docx)
 
 [Daly Alarm Codes](INSERT LINK HERE)
+
+## Notes
+- Whenever a new version of the executable is built and released, you must update the run.bat file so that the version number matches, or the run.bat file won't work.
