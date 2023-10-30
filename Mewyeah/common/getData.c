@@ -168,6 +168,10 @@ void parseBmsResponseTemp( unsigned char *pResponse, int len )
 	{
 		temp = (pResponse[10+i] & 0xFF) - 40;
 
+        if (temp == -40) { // -40 means no data, so we will set to 0 instead of displaying as -40
+            temp = 0;
+        }
+
         bmsData.temperatures[i] = temp;
         printf("cell_temps[%d]: %.0fC\n", i, bmsData.temperatures[i]);
 	}
