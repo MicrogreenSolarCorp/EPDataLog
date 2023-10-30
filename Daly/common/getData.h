@@ -14,6 +14,8 @@ typedef HANDLE CommHandle;
 typedef int CommHandle;
 #endif
 
+#include "../../constants.h"
+
 #define READ_BAT_TOTAL_VOLTAGE_CURRENT_SOC		    0x90
 #define READ_BAT_HIGHEST_LOWEST_VOLTAGE		        0x91
 #define READ_BAT_MAX_MIN_TEMP		                0x92
@@ -23,9 +25,6 @@ typedef int CommHandle;
 #define READ_BAT_SINGLE_CELL_TEMP		            0x96
 #define READ_BAT_SINGLE_CELL_BALANCE_STATUS		    0x97 
 #define READ_BAT_SINGLE_CELL_FAILURE_STATUS		    0x98
-
-#define G_MAX_NUMBER_OF_CELLS       16
-#define G_MAX_NUMBER_OF_TEMP_SENSORS 4
 
 
 typedef struct {

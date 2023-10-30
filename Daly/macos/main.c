@@ -1,8 +1,11 @@
 // File: main.c
 // Description: Main file for Daly MacOS program.
+
+#include "../../common/readProgramParams.h"
 #include "../../common/macos/connection.h"
 #include "../../common/macos/outputToCsv.h"
 #include "../common/getData.h"
+
 #include <stdio.h>
 
 #include <unistd.h>
@@ -23,8 +26,10 @@ int main(int argc, char *argv[]) {
     bmsData.lineNumber = 1;
 
     int serialPortNumber = NO_COM_PORT_NUMBER_SUPPLIED;
-    serialPortNumber = readProgramParams(argc, argv);
-    if (serialPortNumber == INVALID_COM_PORT_NUMBER || serialPortNumber == INVALID_DELAY_TIME_SUPPLIED) {
+    int delayTimeMs = 0;
+    int readProgramParamsReturnCode = readProgramParams(argc, argv, &serialPortNumber, &delayTimeMs);
+
+    if (readProgramParamsReturnCode == INVALID_COM_PORT_NUMBER || readProgramParamsReturnCode == INVALID_DELAY_TIME_SUPPLIED) {
         return 1; // Invalid serial port number or delay time supplied.
     }
 
@@ -38,8 +43,7 @@ int main(int argc, char *argv[]) {
     FILE *fp = openCsvFile();
     printCsvHeader(fp);
 
-    // while (1) {
-    for (int i = 0; i < 3; i++) {
+    while (1) {
         getDateTime();
         getBMSData(fd, READ_BAT_TOTAL_VOLTAGE_CURRENT_SOC);
         getBMSData(fd, READ_BAT_HIGHEST_LOWEST_VOLTAGE);
@@ -52,7 +56,7 @@ int main(int argc, char *argv[]) {
         getBMSData(fd, READ_BAT_SINGLE_CELL_FAILURE_STATUS);
 
         outputBMSDataToCsv(fp);
-        usleep(g_delay_time_ms * 1000); // usleep takes sleep time in us (1 millionth of a second)
+        usleep(delayTimeMs * 1000); // usleep takes sleep time in us (1 millionth of a second)
     }
 
     // Close the file

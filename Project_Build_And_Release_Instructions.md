@@ -5,25 +5,25 @@
 ### For Mewyeah Windows:
 ```bash
 cd ./Mewyeah/windows
-gcc -std=c99 -o EPDataLogMewyeahWindows ../../common/windows/connection.c ../../common/windows/outputToCsv.c ../common/getData.c main.c
+gcc -std=c99 -o EPDataLogMewyeahWindows ../../common/readProgramParams.c ../../common/windows/connection.c ../../common/windows/outputToCsv.c ../common/getData.c main.c
 ```
 
 ### For Daly Windows:
 ```bash
 cd ./Daly/windows
-gcc -std=c99 -o EPDataLogDalyWindows ../../common/windows/connection.c ../../common/windows/outputToCsv.c ../common/getData.c main.c
+gcc -std=c99 -o EPDataLogDalyWindows ../../common/readProgramParams.c ../../common/windows/connection.c ../../common/windows/outputToCsv.c ../common/getData.c main.c
 ```
 
 ### For Mewyeah MacOS:
 ```bash
 cd ./Mewyeah/macos
-gcc -std=c99 -o EPDataLogMewyeahMacOS ../../common/macos/connection.c ../../common/macos/outputToCsv.c ../common/getData.c main.c
+gcc -std=c99 -o EPDataLogMewyeahMacOS ../../common/readProgramParams.c ../../common/macos/connection.c ../../common/macos/outputToCsv.c ../common/getData.c main.c
 ```
 
 ### For Daly MacOS:
 ```bash
 cd ./Daly/macos
-gcc -std=c99 -o EPDataLogDalyMacOS ../../common/macos/connection.c ../../common/macos/outputToCsv.c ../common/getData.c main.c
+gcc -std=c99 -o EPDataLogDalyMacOS ../../common/readProgramParams.c ../../common/macos/connection.c ../../common/macos/outputToCsv.c ../common/getData.c main.c
 ```
 
 ## Version Tagging and Pushing

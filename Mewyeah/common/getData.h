@@ -14,13 +14,12 @@ typedef HANDLE CommHandle;
 typedef int CommHandle;
 #endif
 
+#include "../../constants.h"
+
 #define READ_BAT_VOLTAGE 0x9A
 #define READ_BAT_OTHER   0x9B
 #define READ_BAT_BAL     0x9C
 #define READ_BAT_TEMP    0x9D
-
-#define G_MAX_NUMBER_OF_CELLS       16
-#define G_MAX_NUMBER_OF_TEMP_SENSORS 2
 
 typedef struct {
     int lineNumber;

@@ -44,6 +44,8 @@ In EPDataLog/common/Daly and EPDataLog/common/Mewyeah, we have three directories
 
 
 ## Useful Resources
+For instructions on compiling and releasing the code, refer to [Project_Build_And_Release_Instructions.md](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/Project_Build_And_Release_Instructions.md)
+
 If changes need to be made to the BMS communication code, refer to the company's internal documentation regarding each BMS.
 
 Refer to [SampleLog.csv](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/SampleLog.csv) for an example of the output CSV file.
