@@ -28,6 +28,6 @@ gcc -std=c99 -o EPDataLogDalyMacOS ../../common/readProgramParams.c ../../common
 
 ## Version Tagging and Pushing
 ```
-git tag -a Daly-Windows-v1.0.0 -m "Released Daly Windows 1.0.0"
-git push origin Daly-Windows-v1.0.0
+git tag -a EPDataLog-v1.0.0 -m "Released v1.0.0 for all 4 program variants"
+ push origin EPDataLog-v1.0.0 
 ```
