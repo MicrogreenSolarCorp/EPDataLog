@@ -33,3 +33,7 @@ gcc -std=c99 -o EPDataLogDalyMacOS_vX-X ../../common/readProgramParams.c ../../c
 git tag -a EPDataLog_vX.X -m "Released vX.X for all 4 program variants"
 git push origin EPDataLog_vX.X
 ```
+
+## Important Notes
+- Whenever a new version of the executable is built and released, you must update the run.bat file so that the version number matches, or the run.bat file won't work.
+- Whenever a zip file is created for a release, **Make sure the README.md file is bundled in there**. Otherwise, the user won't know how to use the program if they can't access the README on github.
