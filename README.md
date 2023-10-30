@@ -8,7 +8,7 @@ EPDataLog is a program designed to facilitate data logging from a Microgreen Ene
 
 ## Installation
 
-1. Navigate to the [release page](https://github.com/MicrogreenSolarCorp/EPDataLog/releases/tag/Mewyeah-Windows-v1.0.0).
+1. Navigate to the [release page](https://github.com/MicrogreenSolarCorp/EPDataLog/releases).
 2. Select the latest release and expand the Assets dropdown menu.
 3. **Important:** Ensure you know the BMS version that your EnergyPak is using (Mewyeah or Daly). Download the corresponding zip file for your operating system and BMS version.
 4. Unzip the downloaded file.
@@ -18,7 +18,7 @@ EPDataLog is a program designed to facilitate data logging from a Microgreen Ene
 ### Windows
 
 #### Quickstart
-Simply open the folder and double-click on the `run.bat` file to start data logging with default settings.
+Simply open the unzipped folder and double-click on the `run.bat` file to start data logging with default settings.
 
 #### Custom Configuration
 To modify the read interval or specify a COM port:
