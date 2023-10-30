@@ -31,5 +31,5 @@ gcc -std=c99 -o EPDataLogDalyMacOS_v1-1 ../../common/readProgramParams.c ../../c
 ## Version Tagging and Pushing
 ```
 git tag -a EPDataLog_vX.X -m "Released vX.X for all 4 program variants"
- push origin EPDataLog_vX.X
+git push origin EPDataLog_vX.X
 ```
