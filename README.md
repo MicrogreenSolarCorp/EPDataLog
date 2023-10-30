@@ -45,3 +45,8 @@ Open the folder and double-click on the program file to start data logging with 
 To perform data logging every 5000 ms through COM3, modify the batch file to include:
 ```bash
 EPDataLogMewyeahWindows.exe -t 5000 -c 3
+```
+
+## Example
+Refer to [SampleLog.csv](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/SampleLog.csv) for an example of the output CSV file.
+
