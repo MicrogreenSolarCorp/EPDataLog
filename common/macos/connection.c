@@ -24,7 +24,7 @@ int setupSerialPort(const int portNumber, const int baudRate, const unsigned cha
             } else {
                 printf("Could not write data to port %s\n", portName);
                 close(fd);
-                return INVALID_PORT_VALUE;
+                return INVALID_COM_PORT_NUMBER;
             }
 
             // Sleep for a short duration to allow data to be received
@@ -38,7 +38,7 @@ int setupSerialPort(const int portNumber, const int baudRate, const unsigned cha
             } else {
                 printf("Could not read data from port %s\n", portName);
                 close(fd);
-                return INVALID_PORT_VALUE;
+                return INVALID_COM_PORT_NUMBER;
             }
 
             // Check the response
@@ -81,6 +81,10 @@ int setupSerialPort(const int portNumber, const int baudRate, const unsigned cha
                     int nBytesRead = (int) read(fd, buffer, sizeof(buffer));
                     if (nBytesRead > 0) {
                         printf("Read %d bytes from port %s\n", nBytesRead, portName);
+                        // Print buffer
+                        for (int i = 0; i < nBytesRead; ++i) {
+                            printf("%02X ", buffer[i]);
+                        }
                     } else {
                         printf("Could not read data from port %s\n", portName);
                         close(fd);
@@ -101,7 +105,7 @@ int setupSerialPort(const int portNumber, const int baudRate, const unsigned cha
     }
 
     printf("Unable to find the target serial port. Aborting.\n");
-    return INVALID_PORT_VALUE;
+    return INVALID_COM_PORT_NUMBER;
 }
 
 

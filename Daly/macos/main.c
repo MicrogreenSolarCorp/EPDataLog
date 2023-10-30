@@ -29,6 +29,7 @@ int main(int argc, char *argv[]) {
     int delayTimeMs = DEFAULT_DELAY_TIME_MS;
     int readProgramParamsReturnCode = readProgramParams(argc, argv, &serialPortNumber, &delayTimeMs);
 
+    printf("readProgramParamsReturnCode: %d\n", readProgramParamsReturnCode);
     if (readProgramParamsReturnCode == INVALID_COM_PORT_NUMBER || readProgramParamsReturnCode == INVALID_DELAY_TIME_SUPPLIED) {
         return 1; // Invalid serial port number or delay time supplied.
     }
