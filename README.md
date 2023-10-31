@@ -19,7 +19,8 @@ EPDataLog is a program designed to facilitate data logging from a Microgreen Ene
 ### Windows
 
 #### Quickstart
-Simply open the unzipped folder and double-click on the `run.bat` file to start data logging with default settings.
+1. Make sure your EnergyPak is ON and connected to your computer via the RS232-USB cable. If you are using a 12kWh EnergyPak, make sure the display is turned OFF.
+2. Simply open the unzipped folder and double-click on the `run.bat` file to start data logging with default settings.
 
 ![windowsRun](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/assetsForReadme/windowsRun.png)
 ![windowsRunSuccess](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/assetsForReadme/windowsRunSuccess.png)
@@ -35,7 +36,8 @@ To modify the read interval or specify a COM port:
 ### MacOS
 
 #### Quickstart
-Open the folder and double-click on the program file to start data logging with default settings.
+1. Make sure your EnergyPak is ON and connected to your computer via the RS232-USB cable. If you are using a 12kWh EnergyPak, make sure the display is turned OFF.
+2. Open the folder and double-click on the program file to start data logging with default settings.
 
 ![macosRun](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/assetsForReadme/macosRun.png)
 ![macosRunSuccess](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/assetsForReadme/macosRunSuccess.png)
