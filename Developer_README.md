@@ -54,6 +54,7 @@ Refer to [SampleLog.csv](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/m
 Refer to Alarm Codes for a list of alarm codes and their meanings.
 
 [Mewyeah Alarm Codes](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/Mewyeah/Alarm%20Bit%20Codes.docx)
+
 [Daly Alarm Codes](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/Daly/DalyCommunicationProtocol.pdf)
 
 ## Notes
