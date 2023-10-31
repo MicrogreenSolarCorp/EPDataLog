@@ -17,7 +17,6 @@ EPDataLog
 ├── common
 │   ├── macos
 │   └── windows
-│   │   ├── EPDataLogMewyeahWindows.exe
 ├── Daly
 │   ├── common
 │   ├── macos
