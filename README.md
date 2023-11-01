@@ -8,8 +8,8 @@ EPDataLog is a program designed to facilitate data logging from a Microgreen Ene
 
 ## Installation
 
-1. If you are on Windows, ensure you have the [CH340 Driver](https://learn.sparkfun.com/tutorials/how-to-install-ch340-drivers/all) installed. Scroll down under the Windows 7/10 header and click on CH341SER (EXE).This driver is required for the RS232-USB cable to work correctly. If you are on MacOS, the driver should be installed automatically.
-2. Navigate to the [release page](https://github.com/MicrogreenSolarCorp/EPDataLog/releases).
+1. If you are on Windows, ensure you have the [CH340 Driver](https://learn.sparkfun.com/tutorials/how-to-install-ch340-drivers/all){:target="_blank"} installed. Scroll down under the Windows 7/10 header and click on CH341SER (EXE).This driver is required for the RS232-USB cable to work correctly. If you are on MacOS, the driver should be installed automatically.
+2. Navigate to the [release page](https://github.com/MicrogreenSolarCorp/EPDataLog/releases){:target="_blank"}.
 3. Select the latest release and expand the Assets dropdown menu.
 4. **Important:** Ensure you know the BMS version that your EnergyPak is using (Mewyeah or Daly). Download the corresponding zip file for your operating system and BMS version.
 5. Unzip the downloaded file.
@@ -22,11 +22,11 @@ EPDataLog is a program designed to facilitate data logging from a Microgreen Ene
 1. Make sure your EnergyPak is ON and connected to your computer via the RS232-USB cable. If you are using a 12kWh EnergyPak, make sure the display is turned OFF.
 2. Simply open the unzipped folder and double-click on the `run.bat` file to start data logging with default settings.
 
-![windowsRun](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/assetsForReadme/windowsRun.png)
-![windowsRunSuccess](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/assetsForReadme/windowsRunSuccess.png)
+![windowsRun](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/assetsForReadme/windowsRun.png){:target="_blank"}
+![windowsRunSuccess](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/assetsForReadme/windowsRunSuccess.png){:target="_blank"}
 
 #### Custom Configuration
-To modify the read interval or specify a COM port:
+If you would like to modify the read interval or specify a COM port:
 1. Right-click on `run.bat` and select "Open with" → "Notepad", or open Notepad and navigate to File → Open to select `run.bat`.
 2. Locate the line with the command `EPDataLogMewyeah.exe -t [Interval Time(ms)] -c [COM Port Number]`.
 3. Replace `[Interval Time(ms)]` and `[COM Port Number]` with your desired values.
@@ -39,8 +39,8 @@ To modify the read interval or specify a COM port:
 1. Make sure your EnergyPak is ON and connected to your computer via the RS232-USB cable. If you are using a 12kWh EnergyPak, make sure the display is turned OFF.
 2. Open the folder and double-click on the program file to start data logging with default settings.
 
-![macosRun](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/assetsForReadme/macosRun.png)
-![macosRunSuccess](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/assetsForReadme/macosRunSuccess.png)
+![macosRun](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/assetsForReadme/macosRun.png){:target="_blank"}
+![macosRunSuccess](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/assetsForReadme/macosRunSuccess.png){:target="_blank"}
 
 ### Custom Configuration Instructions
 
@@ -55,5 +55,5 @@ EPDataLogMewyeahWindows.exe -t 5000 -c 3
 ```
 
 ## Sample Output
-Refer to [SampleLog.csv](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/SampleLog.csv) for an example of the output CSV file.
+Refer to [SampleLog.csv](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/SampleLog.csv){:target="_blank"} for an example of the output CSV file.
 
