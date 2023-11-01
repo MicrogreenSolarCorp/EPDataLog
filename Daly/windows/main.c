@@ -1,7 +1,7 @@
 // File: main.c
 // Description: Main file for Daly Windows program.
 
-#include "../../common/readProgramParams.h"
+#include "../../common/getInput.h"
 #include "../../common/windows/connection.h"
 #include "../../common/windows/outputToCsv.h"
 #include "../common/getData.h"
@@ -22,10 +22,12 @@ int main(int argc, char *argv[]) {
 
     int comPortNumber = NO_COM_PORT_NUMBER_SUPPLIED;
     int delayTimeMs = DEFAULT_DELAY_TIME_MS;
-    int readProgramParamsReturnCode = readProgramParams(argc, argv, &comPortNumber, &delayTimeMs);
 
-    if (comPortNumber == INVALID_COM_PORT_NUMBER || comPortNumber == INVALID_DELAY_TIME_SUPPLIED) {
-        return 1; // Invalid COM port number or delay time supplied.
+    if (getInput(&comPortNumber, &delayTimeMs) == 0) {
+        printf("Configuration: COM port number = %d, delay time = %d ms\n", comPortNumber, delayTimeMs);
+    } else {
+        printf("Failed to read program parameters.\n");
+        return 1;
     }
 
     HANDLE hComm = setupCOMPort(comPortNumber, BAUD_RATE, connectionQueryData, expectedConnectionQueryResponse, sizeof(connectionQueryData));

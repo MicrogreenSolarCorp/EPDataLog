@@ -10,9 +10,8 @@ EPDataLog is a program designed to facilitate data logging from a Microgreen Ene
 
 1. On Windows, install the [CH340 Driver](https://www.wch-ic.com/downloads/CH341SER_ZIP.html) (Ctrl+Click to open in a new tab).
 2. Navigate to the [release page](https://github.com/MicrogreenSolarCorp/EPDataLog/releases) (Ctrl+Click to open in a new tab).
-3. Select the latest release and expand the Assets dropdown menu.
-4. **Important:** Check the BMS version of the EnergyPak (either Mewyeah or Daly). Download the corresponding zip file for the operating system and BMS version.
-5. Unzip the downloaded file.
+3. **Important:** Check the BMS version of the EnergyPak (either Mewyeah or Daly). Download the corresponding zip file for the operating system and BMS version.
+4. Unzip the downloaded file.
 
 ## Usage
 

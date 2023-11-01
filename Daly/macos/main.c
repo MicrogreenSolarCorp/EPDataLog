@@ -1,7 +1,7 @@
 // File: main.c
 // Description: Main file for Daly MacOS program.
 
-#include "../../common/readProgramParams.h"
+#include "../../common/getInput.h"
 #include "../../common/macos/connection.h"
 #include "../../common/macos/outputToCsv.h"
 #include "../common/getData.h"
@@ -27,11 +27,11 @@ int main(int argc, char *argv[]) {
 
     int serialPortNumber = NO_COM_PORT_NUMBER_SUPPLIED;
     int delayTimeMs = DEFAULT_DELAY_TIME_MS;
-    int readProgramParamsReturnCode = readProgramParams(argc, argv, &serialPortNumber, &delayTimeMs);
-
-    printf("readProgramParamsReturnCode: %d\n", readProgramParamsReturnCode);
-    if (readProgramParamsReturnCode == INVALID_COM_PORT_NUMBER || readProgramParamsReturnCode == INVALID_DELAY_TIME_SUPPLIED) {
-        return 1; // Invalid serial port number or delay time supplied.
+    if (getInput(&serialPortNumber, &delayTimeMs) == 0) {
+        printf("Configuration: COM port number = %d, delay time = %d ms\n", serialPortNumber, delayTimeMs);
+    } else {
+        printf("Failed to read program parameters.\n");
+        return 1;
     }
 
     int fd = setupSerialPort(serialPortNumber, BAUD_RATE, connectionQueryData, expectedConnectionQueryResponse, sizeof(connectionQueryData));
