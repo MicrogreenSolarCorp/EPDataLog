@@ -31,6 +31,9 @@ int main(int argc, char *argv[]) {
         printf("Configuration: COM port number = %d, delay time = %d ms\n", serialPortNumber, delayTimeMs);
     } else {
         printf("Failed to read program parameters.\n");
+        // Used to not immediately close the command window after the program is done.
+        printf("Press Enter to close the window...");
+        getchar();
         return 1;
     }
 
@@ -64,5 +67,8 @@ int main(int argc, char *argv[]) {
     fclose(fp);
     // Close the COM port
     close(fd);
+    // Used to not immediately close the command window after the program is done.
+    printf("Press Enter to close the window...");
+    getchar();
     return 0;
 }

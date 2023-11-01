@@ -57,5 +57,4 @@ Refer to Alarm Codes for a list of alarm codes and their meanings.
 [Daly Alarm Codes](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/Daly/DalyCommunicationProtocol.pdf)
 
 ## Notes
-- Whenever a new version of the executable is built and released, you must update the run.bat file so that the version number matches, or the run.bat file won't work.
 - Whenever a zip file is created for a release, **Make sure the README.md file is bundled in there**. Otherwise, the user won't know how to use the program if they can't access the README on github.
