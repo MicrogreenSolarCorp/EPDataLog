@@ -22,9 +22,11 @@ EPDataLog is a program designed to facilitate data logging from a Microgreen Ene
 ![windowsRun](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/assetsForReadme/windowsRun.png)
 3. A command prompt window will open. Follow the instructions highlighted in red. 
 4. The first question will ask if you would like to run the program with default settings. This is recommended for most users. Press `y` and `Enter` to continue, then skip to step 7. If you would like to customize the settings, type `n` and press `Enter`.
+![defaultSettings](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/assetsForReadme/defaultSettings.png)
 5. If you chose to customize the settings, you will be prompted to enter the COM port number. This is the port number of the RS232-USB cable. The port number can be found in the Device Manager. If you are unsure of the port number, press `Enter` to perform auto-port-detection.
+![portNumber](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/assetsForReadme/portNumber.png)
 6. If you chose to customize the settings, you will be prompted to enter the data logging interval. This is the interval between each data logging query. The default value is 2000ms. If you are unsure of what value to enter, press `Enter` to use the default value.
-
+![delayTime](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/assetsForReadme/delayTime.png)
 7. If you see this screen, the program is running successfully. DO NOT close the command prompt window.
 ![macosRunSuccess](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/assetsForReadme/macosRunSuccess.png)
 
