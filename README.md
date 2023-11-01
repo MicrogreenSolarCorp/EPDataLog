@@ -26,7 +26,7 @@ EPDataLog is a program designed to facilitate data logging from a Microgreen Ene
 6. If you chose to customize the settings, you will be prompted to enter the data logging interval. This is the interval between each data logging query. The default value is 2000ms. If you are unsure of what value to enter, press `Enter` to use the default value.
 
 7. If you see this screen, the program is running successfully. DO NOT close the command prompt window.
-![macRunSuccess](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/assetsForReadme/macRunSuccess.png)
+![macosRunSuccess](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/assetsForReadme/macosRunSuccess.png)
 
 
 ## Sample Output
