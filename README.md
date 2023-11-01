@@ -19,28 +19,15 @@ EPDataLog is a program designed to facilitate data logging from a Microgreen Ene
 ### Windows
 1. Ensure the EnergyPak is ON and connected to the computer via the RS232-USB cable. If using a 12kWh EnergyPak, ensure the display is turned OFF.
 2. Open the unzipped folder and double-click on the `EPDataLog_Mewyeah_Windows_v1-2.exe` or `EPDataLog_Daly_Windows_v1-2.exe` file.
+![windowsRun](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/assetsForReadme/windowsRun.png)
 3. A command prompt window will open. Follow the instructions highlighted in red. 
+4. The first question will ask if you would like to run the program with default settings. This is recommended for most users. Press `y` and `Enter` to continue, then skip to step 7. If you would like to customize the settings, type `n` and press `Enter`.
+5. If you chose to customize the settings, you will be prompted to enter the COM port number. This is the port number of the RS232-USB cable. The port number can be found in the Device Manager. If you are unsure of the port number, press `Enter` to perform auto-port-detection.
+6. If you chose to customize the settings, you will be prompted to enter the data logging interval. This is the interval between each data logging query. The default value is 2000ms. If you are unsure of what value to enter, press `Enter` to use the default value.
 
+7. If you see this screen, the program is running successfully. DO NOT close the command prompt window.
+![macRunSuccess](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/assetsForReadme/macRunSuccess.png)
 
-
-#### Quickstart
-1. Ensure the EnergyPak is ON and connected to the computer via the RS232-USB cable. If using a 12kWh EnergyPak, ensure the display is turned OFF.
-2. Open the folder and double-click on the program file to start data logging with default settings.
-
-![macosRun](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/assetsForReadme/macosRun.png)
-![macosRunSuccess](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/assetsForReadme/macosRunSuccess.png)
-
-### Custom Configuration Instructions
-
-#### Parameters
-- `-t [Interval Time(ms)]`: Specifies the time interval in milliseconds between two consecutive data logs. The default value is 5000 ms.
-- `-c [COM Port Number]`: Specifies the COM port number for device communication. If not specified, the script will auto-detect the correct COM port.
-
-#### Custom Configuration Example
-To perform data logging every 5000 ms through COM3, modify the batch file to include:
-```bash
-EPDataLogMewyeahWindows.exe -t 5000 -c 3
-```
 
 ## Sample Output
 Refer to [SampleLog.csv](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/SampleLog.csv) (Ctrl+Click to open in a new tab) for an example of the output CSV file.
