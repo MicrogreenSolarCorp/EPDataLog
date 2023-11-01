@@ -29,7 +29,7 @@ EPDataLog is a program designed to facilitate data logging from a Microgreen Ene
 ![delayTime](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/assetsForReadme/delayTime.png)
 7. If this screen appears, the program is running successfully. DO NOT close the command prompt window.
 ![macosRunSuccess](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/assetsForReadme/macosRunSuccess.png)
-
+8. If performing the data logging for a long time (i.e. overnight), ensure that your laptop does not go to sleep and that it has enough battery.
 
 
 ## Sample Output
