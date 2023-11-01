@@ -63,3 +63,5 @@ Refer to Alarm Codes for a list of alarm codes and their meanings.
 
 ## Notes
 - Whenever a zip file is created for a release, **Make sure the README.md file is bundled in there**. Otherwise, the user won't know how to use the program if they can't access the README on github.
+
+- For some reason, when the Mac execuatables are zipped on windows, they cannot be opened properly on Mac. Thus, make sure to zip the Mac executables on Mac.
