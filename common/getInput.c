@@ -25,7 +25,7 @@ int getInput(int *serialPortNumber, int *delayTimeMs) {
         *delayTimeMs = DEFAULT_DELAY_TIME_MS;
         return 0;
     } else if (useDefaultSettings == 'n' || useDefaultSettings == 'N') {
-        printf(ANSI_COLOR_RED "Enter custom port number (%d-%d) or press Enter for default: " ANSI_COLOR_GREEN, MIN_COM_PORT_NUMBER, MAX_COM_PORT_NUMBER);
+        printf(ANSI_COLOR_RED "Enter custom port number (%d-%d) or press Enter for auto port detection: " ANSI_COLOR_GREEN, MIN_COM_PORT_NUMBER, MAX_COM_PORT_NUMBER);
         fgets(inputBuffer, sizeof(inputBuffer), stdin);
         printf(ANSI_COLOR_RESET);
         if (strlen(inputBuffer) > 1) {
@@ -38,13 +38,13 @@ int getInput(int *serialPortNumber, int *delayTimeMs) {
             *serialPortNumber = NO_COM_PORT_NUMBER_SUPPLIED;
         }
 
-        printf(ANSI_COLOR_RED "Enter custom delay time (ms, >= %d) or press Enter for default: " ANSI_COLOR_GREEN, MIN_DELAY_TIME);
+        printf(ANSI_COLOR_RED "Enter logging interval time (s, >= %d) or press Enter for default (%d s): " ANSI_COLOR_GREEN, MIN_DELAY_TIME, DEFAULT_DELAY_TIME_MS / 1000);
         fgets(inputBuffer, sizeof(inputBuffer), stdin);
         printf(ANSI_COLOR_RESET);
         if (strlen(inputBuffer) > 1) {
-            *delayTimeMs = atoi(inputBuffer);
+            *delayTimeMs = atoi(inputBuffer) * 1000; // Input in s, convert to ms
             if (*delayTimeMs < MIN_DELAY_TIME) {
-                printf("Error: Delay time must be greater than or equal to %d. Aborting.\n", MIN_DELAY_TIME);
+                printf("Error: logging interval time must be greater than or equal to %d. Aborting.\n", MIN_DELAY_TIME);
                 return -1;
             }
         } else {

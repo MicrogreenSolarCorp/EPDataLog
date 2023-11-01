@@ -7,7 +7,7 @@
 # define CONSTANTS_H
 
 // Used in connection.c
-#define DEFAULT_DELAY_TIME_MS 2000
+#define DEFAULT_DELAY_TIME_MS 5000
 
 #define MIN_DELAY_TIME 0
 #define MAX_COM_PORT_NUMBER 20
