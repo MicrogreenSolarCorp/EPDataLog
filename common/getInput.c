@@ -6,17 +6,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define ANSI_COLOR_RED     "\x1b[31m"
-#define ANSI_COLOR_GREEN   "\x1b[32m"
-#define ANSI_COLOR_RESET   "\x1b[0m"
-
 int getInput(int *serialPortNumber, int *delayTimeMs) {
     char useDefaultSettings;
     char inputBuffer[256];
 
-    printf(ANSI_COLOR_RED "Would you like to use default settings? (y/n): " ANSI_COLOR_GREEN);
+    printf("Would you like to use default settings? (y/n): ");
     scanf(" %c", &useDefaultSettings);
-    printf(ANSI_COLOR_RESET);
 
     while(getchar() != '\n');  // Clear newline from buffer
 
@@ -25,9 +20,8 @@ int getInput(int *serialPortNumber, int *delayTimeMs) {
         *delayTimeMs = DEFAULT_DELAY_TIME_MS;
         return 0;
     } else if (useDefaultSettings == 'n' || useDefaultSettings == 'N') {
-        printf(ANSI_COLOR_RED "Enter custom port number (%d-%d) or press Enter for auto port detection: " ANSI_COLOR_GREEN, MIN_COM_PORT_NUMBER, MAX_COM_PORT_NUMBER);
+        printf("Enter custom port number (%d-%d) or press Enter for auto port detection: ", MIN_COM_PORT_NUMBER, MAX_COM_PORT_NUMBER);
         fgets(inputBuffer, sizeof(inputBuffer), stdin);
-        printf(ANSI_COLOR_RESET);
         if (strlen(inputBuffer) > 1) {
             *serialPortNumber = atoi(inputBuffer);
             if (*serialPortNumber < MIN_COM_PORT_NUMBER || *serialPortNumber > MAX_COM_PORT_NUMBER) {
@@ -38,9 +32,8 @@ int getInput(int *serialPortNumber, int *delayTimeMs) {
             *serialPortNumber = NO_COM_PORT_NUMBER_SUPPLIED;
         }
 
-        printf(ANSI_COLOR_RED "Enter logging interval time (s, >= %d) or press Enter for default (%d s): " ANSI_COLOR_GREEN, MIN_DELAY_TIME, DEFAULT_DELAY_TIME_MS / 1000);
+        printf("Enter logging interval time (s, >= %d) or press Enter for default (%d s): ", MIN_DELAY_TIME, DEFAULT_DELAY_TIME_MS / 1000);
         fgets(inputBuffer, sizeof(inputBuffer), stdin);
-        printf(ANSI_COLOR_RESET);
         if (strlen(inputBuffer) > 1) {
             *delayTimeMs = atoi(inputBuffer) * 1000; // Input in s, convert to ms
             if (*delayTimeMs < MIN_DELAY_TIME) {
