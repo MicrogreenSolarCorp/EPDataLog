@@ -8,7 +8,7 @@ EPDataLog is a program designed to facilitate data logging from a Microgreen Ene
 
 ## Installation
 
-1. If you are on Windows, ensure you have the [CH340 Driver](https://learn.sparkfun.com/tutorials/how-to-install-ch340-drivers/all){:target="_blank"} installed. Scroll down under the Windows 7/10 header and click on CH341SER (EXE).This driver is required for the RS232-USB cable to work correctly. If you are on MacOS, the driver should be installed automatically.
+1. On Windows, install the <a href="https://www.wch-ic.com/downloads/CH341SER_ZIP.html" target="_blank">CH340 Driver</a>. 
 2. Navigate to the [release page](https://github.com/MicrogreenSolarCorp/EPDataLog/releases){:target="_blank"}.
 3. Select the latest release and expand the Assets dropdown menu.
 4. **Important:** Ensure you know the BMS version that your EnergyPak is using (Mewyeah or Daly). Download the corresponding zip file for your operating system and BMS version.
