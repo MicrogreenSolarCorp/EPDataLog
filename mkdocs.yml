@@ -1,5 +1,5 @@
 site_name: Microgreen EPDataLog
-site_url: https://MicrogreenSolarCorp.github.io/EPDataLog/user_documentation
+site_url: https://MicrogreenSolarCorp.github.io/EPDataLog/
 theme:
   name: material
   features:
