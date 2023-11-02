@@ -16,7 +16,6 @@ EPDataLog is a program designed to facilitate data logging from a Microgreen Ene
 
 ## Usage
 
-### Windows
 1. Ensure the EnergyPak is ON and connected to the computer via the RS232-USB cable. If using a 12kWh EnergyPak, ensure the display is turned OFF.
 2. Open the unzipped folder and double-click on the `EPDataLog_Mewyeah_Windows_v1-2.exe` or `EPDataLog_Daly_Windows_v1-2.exe` file.
 ![windowsRun](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/docs/documentationAssets/windowsRun.png)
