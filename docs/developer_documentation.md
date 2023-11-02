@@ -65,3 +65,46 @@ Refer to Alarm Codes for a list of alarm codes and their meanings.
 - Whenever a zip file is created for a release, **Make sure the README.md file is bundled in there**. Otherwise, the user won't know how to use the program if they can't access the README on github.
 
 - For some reason, when the Mac execuatables are zipped on windows, they cannot be opened properly on Mac. Thus, make sure to zip the Mac executables on Mac.
+
+
+## Running the MkDocs Site Locally
+MkDocs was for the documentation site. Github (with github actions and pages) has been set up to automatically build and deploy the site whenever a commit is pushed to the main branch.
+
+The python venv folder in added .gitignore since it's very large. As a result, running the Mkdocs site locally requires some extra steps. Note that it is not necessary to setup the venv if you don't want to run it locally.
+
+If you would like to run the MkDocs site locally on your machine, follow these steps:
+
+1. Ensure you have Python installed on your machine. If not, download and install Python from [the official website](https://www.python.org/downloads/).
+
+2. Clone the repository to your local machine:
+    ```bash
+    git clone https://github.com/MicrogreenSolarCorp/EPDataLog.git
+    cd EPDataLog
+    ```
+
+3. Create a virtual environment in the project directory:
+    ```bash
+    python3 -m venv .venv
+    ```
+
+4. Activate the virtual environment:
+    - On Windows:
+        ```powershell
+        .\.venv\Scripts\activate
+        ```
+    - On MacOS or Unix:
+        ```bash
+        source .venv/bin/activate
+        ```
+
+5. Install MkDocs and any other required dependencies within the virtual environment:
+    ```bash
+    pip install mkdocs-material
+    ```
+
+6. Run the MkDocs server locally:
+    ```bash
+    mkdocs serve
+    ```
+
+Now, you should be able to access the MkDocs site locally at `http://127.0.0.1:8000`. Any changes you make to the documentation files should be automatically reflected on the local site.
