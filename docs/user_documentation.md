@@ -33,6 +33,11 @@ EPDataLog is a program designed to facilitate data logging from a Microgreen Ene
 9. To stop the program, you can close the command prompt window or press `Ctrl+C`. The program will automatically save the data to a CSV file and exit.
 ![outputCsv](https://raw.githubusercontent.com/MicrogreenSolarCorp/EPDataLog/main/docs/documentationAssets/outputCsv.png)
 
+## Common Errors
+- On MacOS, you might see this error message when trying to run the app: 
+![macosCannotVerify]
+To fix this, instead of double clicking the app, right click on the app and select "Open". Then, click "Open" on the prompt that appears.
+
 ## Sample Output
 Refer to [SampleLog.csv](https://github.com/MicrogreenSolarCorp/EPDataLog/blob/main/SampleLog.csv) (Ctrl+Click to open in a new tab) for an example of the output CSV file.
 
