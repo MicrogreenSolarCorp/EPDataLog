@@ -1,47 +1,47 @@
-# The name of the source files
-SOURCES = connection.c main.c ../common/getData.c
+CODE_VERSION = 1.2
+BMS_VERSION = Daly
 
-# The name of the executable
-EXE = results
-
-# Flags for compilation (adding warnings are always good)
+CC = gcc
 CFLAGS = -Wall
-
-# Flags for linking (none for the moment)
 LDFLAGS =
+# Sample Output
+# EPDataLog_Daly_Windows_v1.2
+TARGET = myprogram
+UNIVERSAL_TARGET = $(TARGET)-universal
 
-# Libraries to link with (none for the moment)
-LIBS =
+# Directories
+SRCDIR = .
+OBJDIR = obj
+BINDIR = bin
 
-# Use the GCC frontend program when linking
-LD = gcc
+# Platform-specific files
+MAC_FILES = $(wildcard $(SRCDIR)/macos/*.c)
+WIN_FILES = $(wildcard $(SRCDIR)/windows/*.c)
+COMMON_FILES = $(wildcard $(SRCDIR)/*.c)
 
-# This creates a list of object files from the source files
-OBJECTS = $(SOURCES:%.c=%.o)
+# Object files
+MAC_OBJS = $(MAC_FILES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+WIN_OBJS = $(WIN_FILES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+COMMON_OBJS = $(COMMON_FILES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
-# The first target, this will be the default target if none is specified
-# This target tells "make" to make the "all" target
-default: all
+# For Mac, create universal binaries
+.PHONY: all mac windows clean
 
-# Having an "all" target is customary, so one could write "make all"
-# It depends on the executable program
-all: $(EXE)
+all: mac windows
 
-# This will link the executable from the object files
-$(EXE): $(OBJECTS)
-	$(LD) $(LDFLAGS) $(OBJECTS) -o  $(EXE) $(LIBS)
+mac: $(UNIVERSAL_TARGET)
 
-# This is a target that will compile all needed source files into object files
-# We specify the compiler (CC) and compilation flags (CFLAGS)
-%.o: %.c
+$(UNIVERSAL_TARGET): $(MAC_OBJS) $(COMMON_OBJS)
+	$(CC) $(CFLAGS) -arch x86_64 -o $(BINDIR)/$(TARGET)-x86_64 $^ $(LDFLAGS)
+	$(CC) $(CFLAGS) -arch arm64 -o $(BINDIR)/$(TARGET)-arm64 $^ $(LDFLAGS)
+	lipo -create -output $(BINDIR)/$(UNIVERSAL_TARGET) $(BINDIR)/$(TARGET)-x86_64 $(BINDIR)/$(TARGET)-arm64
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Target to clean up after us
-clean:
-	-rm -f $(EXE)      # Remove the executable file
-	-rm -f $(OBJECTS)  # Remove the object files
+# Add a windows target if you need to compile on Windows
+windows: $(WIN_OBJS) $(COMMON_OBJS)
+	# Compilation command for Windows
 
-# Finally we need to tell "make" what source and header file each object file depends on
-getData.o: getData.c getData.h
-connection.o: connection.c connection.h ../common/getData.h
-main.o: main.c connection.h ../common/getData.h
+clean:
+	rm -f $(OBJDIR)/*.o $(BINDIR)/$(TARGET)-x86_64 $(BINDIR)/$(TARGET)-arm64 $(BINDIR)/$(UNIVERSAL_TARGET)

@@ -35,6 +35,7 @@ EPDataLog
 In the project root (EPDataLog), we have three directories, Daly, Mewyeah, and common. Daly and Mewyeah contain code specific to the respective BMS. Common contains code that is shared between the two BMS versions.
 
 In EPDataLog/common/, we have two directories, macos and windows. These directories contain code that is shared between the two BMS versions. Specifically, each OS directory contains code for:
+
 - connecting to the BMS (MacOS uses serial port communication, Windows uses COM Port communication)
 - outputting data to a CSV file (MacOS requires extra configuration to get the correct file path)
 
