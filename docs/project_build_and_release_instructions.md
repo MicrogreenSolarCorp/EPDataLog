@@ -13,7 +13,12 @@ gcc -std=c99 -o EPDataLog_Mewyeah_Windows_vX-X ../../common/getInput.c ../../com
 ### For Mewyeah MacOS:
 ```bash
 cd ./Mewyeah/macos
-gcc -std=c99 -o EPDataLog_Mewyeah_MacOS_vX-X ../../common/getInput.c ../../common/macos/connection.c ../../common/macos/outputToCsv.c ../common/getData.c main.c
+
+gcc -std=c99 -arch x86_64 -o EPDataLog_Mewyeah_MacOS_vX-X_x86 ../../common/getInput.c ../../common/macos/connection.c ../../common/macos/outputToCsv.c ../common/getData.c main.c
+
+gcc -std=c99 -arch arm64 -o EPDataLog_Mewyeah_MacOS_vX-X_arm ../../common/getInput.c ../../common/macos/connection.c ../../common/macos/outputToCsv.c ../common/getData.c main.c
+
+lipo -create -output EPDataLog_Mewyeah_MacOS_vX-X_universal EPDataLog_Mewyeah_MacOS_vX-X_x86 EPDataLog_Mewyeah_MacOS_vX-X_arm
 ```
 
 ### For Daly Windows:
@@ -25,7 +30,11 @@ gcc -std=c99 -o EPDataLog_Daly_Windows_vX-X ../../common/getInput.c ../../common
 ### For Daly MacOS:
 ```bash
 cd ./Daly/macos
-gcc -std=c99 -o EPDataLog_Daly_MacOS_vX-X ../../common/getInput.c ../../common/macos/connection.c ../../common/macos/outputToCsv.c ../common/getData.c main.c
+gcc -std=c99 -arch x86_64 -o EPDataLog_Daly_MacOS_vX-X_x86 ../../common/getInput.c ../../common/macos/connection.c ../../common/macos/outputToCsv.c ../common/getData.c main.c
+
+gcc -std=c99 -arch arm64 -o EPDataLog_Daly_MacOS_vX-X_arm ../../common/getInput.c ../../common/macos/connection.c ../../common/macos/outputToCsv.c ../common/getData.c main.c
+
+lipo -create -output EPDataLog_Daly_MacOS_vX-X_universal EPDataLog_Daly_MacOS_vX-X_x86 EPDataLog_Daly_MacOS_vX-X_arm
 ```
 
 ## Version Tagging and Pushing

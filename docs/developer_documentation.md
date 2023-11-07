@@ -2,10 +2,12 @@
 
 ## Introduction
 EPDataLog is a program designed to facilitate data logging from a Microgreen EnergyPak Battery. At the time of developement, the program supports the following BMS and operating system combinations:
+
 - **Supported BMS:** Mewyeah, Heyo Daly (Also referred to as Daly)
 - **Supported Operating Systems:** Windows, MacOS
 
 ## Features
+
 - **Auto-port detection:** If the user chose not to customize the settings, the program will automatically detect the port number of the RS232-USB cable. This is done by looping from 1-20 and sending a query to each port, checking if the response is correct.
 - **Customized Prarmeters:** After the program is run, the user can choose to customize the parameters of the data logging. This includes the port number and data logging interval (in ms).
 
