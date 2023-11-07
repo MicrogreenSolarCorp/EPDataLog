@@ -35,7 +35,7 @@ EPDataLog is a program designed to facilitate data logging from a Microgreen Ene
 
 ## Common Errors
 - On MacOS, you might see this error message when trying to run the app: 
-![macosCannotVerify]
+![macosCannotVerify](https://raw.githubusercontent.com/MicrogreenSolarCorp/EPDataLog/main/docs/documentationAssets/macosCannotVerify.png)
 To fix this, instead of double clicking the app, right click on the app and select "Open". Then, click "Open" on the prompt that appears.
 
 ## Sample Output
