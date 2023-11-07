@@ -1,0 +1,10 @@
+.vscode
+.DS_Store
+
+/venv
+
+/Daly/windows/*.csv
+/Daly/macos/*.csv
+
+/Mewyeah/windows/*.csv
+/Mewyeah/macos/*.csv
