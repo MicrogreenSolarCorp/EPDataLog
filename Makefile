@@ -32,12 +32,15 @@ windows_daly:
 	cd Daly/windows && \
 	$(CC) $(CFLAGS) -o EPDataLog_Daly_Windows_$(VERSION) ../../common/getInput.c ../../common/windows/connection.c ../../common/windows/outputToCsv.c ../common/getData.c main.c
 
-clean:
+clean_windows:
+	cmd /C "del /Q Daly\windows\EPDataLog_Daly_Windows_$(VERSION).*"
+	cmd /C "del /Q Mewyeah\windows\EPDataLog_Mewyeah_Windows_$(VERSION).*"
+
+clean_macos:
 	rm -f Mewyeah/macos/EPDataLog_Mewyeah_MacOS_$(VERSION)* Daly/macos/EPDataLog_Daly_MacOS_$(VERSION)*
-	rm -f Mewyeah/windows/EPDataLog_Mewyeah_Windows_$(VERSION) Daly/windows/EPDataLog_Daly_Windows_$(VERSION)
 
 clean_csv:
 	find ./Mewyeah -type f -name '*.csv' -exec rm {} +
 	find ./Daly -type f -name '*.csv' -exec rm {} +
 
-.PHONY: mac mac_mewyeah mac_daly windows windows_mewyeah windows_daly clean clean_csv
+.PHONY: mac mac_mewyeah mac_daly windows windows_mewyeah windows_daly clean_windows clean_macos clean_csv
