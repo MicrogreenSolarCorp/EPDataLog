@@ -6,35 +6,22 @@ Note: v1-1 => v1.1, the period is removed because the period leads to issues wit
 
 ### For Mewyeah Windows:
 ```bash
-cd ./Mewyeah/windows
-gcc -std=c99 -o EPDataLog_Mewyeah_Windows_vX-X ../../common/getInput.c ../../common/windows/connection.c ../../common/windows/outputToCsv.c ../common/getData.c main.c
+make windows_mewyeah VERSION=vX-X
 ```
 
 ### For Mewyeah MacOS:
 ```bash
-cd ./Mewyeah/macos
-
-gcc -std=c99 -arch x86_64 -o EPDataLog_Mewyeah_MacOS_vX-X_x86 ../../common/getInput.c ../../common/macos/connection.c ../../common/macos/outputToCsv.c ../common/getData.c main.c
-
-gcc -std=c99 -arch arm64 -o EPDataLog_Mewyeah_MacOS_vX-X_arm ../../common/getInput.c ../../common/macos/connection.c ../../common/macos/outputToCsv.c ../common/getData.c main.c
-
-lipo -create -output EPDataLog_Mewyeah_MacOS_vX-X_universal EPDataLog_Mewyeah_MacOS_vX-X_x86 EPDataLog_Mewyeah_MacOS_vX-X_arm
+make mac_mewyeah VERSION=vX-X
 ```
 
 ### For Daly Windows:
 ```bash
-cd ./Daly/windows
-gcc -std=c99 -o EPDataLog_Daly_Windows_vX-X ../../common/getInput.c ../../common/windows/connection.c ../../common/windows/outputToCsv.c ../common/getData.c main.c
+make windows_daly VERSION=vX-X
 ```
 
 ### For Daly MacOS:
 ```bash
-cd ./Daly/macos
-gcc -std=c99 -arch x86_64 -o EPDataLog_Daly_MacOS_vX-X_x86 ../../common/getInput.c ../../common/macos/connection.c ../../common/macos/outputToCsv.c ../common/getData.c main.c
-
-gcc -std=c99 -arch arm64 -o EPDataLog_Daly_MacOS_vX-X_arm ../../common/getInput.c ../../common/macos/connection.c ../../common/macos/outputToCsv.c ../common/getData.c main.c
-
-lipo -create -output EPDataLog_Daly_MacOS_vX-X_universal EPDataLog_Daly_MacOS_vX-X_x86 EPDataLog_Daly_MacOS_vX-X_arm
+make mac_daly VERSION=vX-X
 ```
 
 ## Version Tagging and Pushing
@@ -45,3 +32,5 @@ git push origin EPDataLog_vX.X
 
 ## Important Notes
 - Whenever a zip file is created for a release, **Make sure the README.md file is bundled in there**. Otherwise, the user won't know how to use the program if they can't access the README on github.
+- For some reason, when the Mac execuatables are zipped on windows, they cannot be opened properly on Mac. Thus, make sure to zip the Mac executables on Mac.
+- The MacOS versions of the software will work for both x86 and arm based Macs. If you are curious, you may look in the make file to see how this is achieved.
