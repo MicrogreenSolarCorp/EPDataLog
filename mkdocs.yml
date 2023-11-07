@@ -2,7 +2,7 @@ site_name: Microgreen EPDataLog
 site_url: https://MicrogreenSolarCorp.github.io/EPDataLog/
 
 nav:
-  - User Documentation: user_documentation.md
+  - User Documentation: index.md
   - Developer Documentation: developer_documentation.md
   - Build and Release Instructions: project_build_and_release_instructions.md
 
