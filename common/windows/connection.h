@@ -9,8 +9,8 @@
 
 
 // Function Prototypes
-HANDLE setupCOMPort(int portNumber, const int baudRate, const unsigned char *queryData, const unsigned char *expectedResponse, const int dataLength);
-HANDLE connectToCOMPort(const char *portName, const int baudRate);
+HANDLE setupCOMPort(int portNumber, const int baudRate, const unsigned char *queryData, const unsigned char *expectedResponse, const int dataLength, const int bmsModel);
+HANDLE connectToCOMPort(const char *portName, const int baudRate, const int bmsModel);
 
 
 #endif // CONNECTION_H

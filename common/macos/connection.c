@@ -8,14 +8,13 @@
 #include <errno.h>
 #include <termios.h>
 
-
-int setupSerialPort(const int portNumber, const int baudRate, const unsigned char *queryData, const unsigned char *expectedResponse, const int dataLength) {
+int setupSerialPort(const int portNumber, const int baudRate, const unsigned char *queryData, const unsigned char *expectedResponse, const int dataLength, const int bmsModel) {
     char portName[30];  // Enough space for "/dev/tty.usbserial-" + up to 2 digits + null terminator
 
     if (portNumber != -1) {
         // Format the specified port name
         sprintf(portName, "/dev/tty.usbserial-%d", portNumber);
-        int fd = connectToSerialPort(portName, baudRate, queryData, expectedResponse, dataLength);
+        int fd = connectToSerialPort(portName, baudRate, queryData, expectedResponse, dataLength, bmsModel);
         if (fd != -1) {
             // Write the query
             int nBytesWritten = (int) write(fd, queryData, dataLength);
@@ -60,7 +59,7 @@ int setupSerialPort(const int portNumber, const int baudRate, const unsigned cha
             for (int i = 1; i <= 20; ++i) {
                 sprintf(portName, "/dev/tty.usbserial-%d", i);
                 printf("Trying port %s\n", portName);
-                int fd = connectToSerialPort(portName, baudRate, queryData, expectedResponse, dataLength);
+                int fd = connectToSerialPort(portName, baudRate, queryData, expectedResponse, dataLength, bmsModel);
                 usleep(500000);  // Sleep for 500 ms, adjust as necessary
                 if (fd != -1) {
                     // Write the query
@@ -109,7 +108,7 @@ int setupSerialPort(const int portNumber, const int baudRate, const unsigned cha
 }
 
 
-int connectToSerialPort(const char *device, const int baudRate, const unsigned char *queryData, const unsigned char *expectedResponse, const int dataLength) {
+int connectToSerialPort(const char *device, const int baudRate, const unsigned char *queryData, const unsigned char *expectedResponse, const int dataLength, const int bmsModel) {
     int fd = open(device, O_RDWR | O_NOCTTY | O_NDELAY);
     if (fd == -1) {
         perror("open_port: Unable to open the serial port");
@@ -124,7 +123,12 @@ int connectToSerialPort(const char *device, const int baudRate, const unsigned c
     cfsetospeed(&options, baudRate);
 
     // Set 8N1 mode
-    options.c_cflag &= ~PARENB; // No parity
+    if (bmsModel == ORION_BMS) {
+        options.c_cflag |= PARENB;  // Set parity enable
+        options.c_cflag &= ~PARODD; // Clear odd parity => even parity
+    } else {
+        options.c_cflag &= ~PARENB; // No parity
+    }
     options.c_cflag &= ~CSTOPB; // 1 stop bit
     options.c_cflag &= ~CSIZE;  // Mask the character size bits
     options.c_cflag |= CS8;     // 8 data bits

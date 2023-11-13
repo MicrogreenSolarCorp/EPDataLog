@@ -4,12 +4,12 @@
 #include "connection.h"  // Include the header file for this source file
 
 // Function to set up the COM port
-HANDLE setupCOMPort(int portNumber, const int baudRate, const unsigned char *queryData, const unsigned char *expectedResponse, const int dataLength) {
+HANDLE setupCOMPort(int portNumber, const int baudRate, const unsigned char *queryData, const unsigned char *expectedResponse, const int dataLength, const int bmsModel) {
     if (portNumber != -1) {
         char comPortName[10];  // Enough space for "COM" + up to 3 digits + null terminator
         sprintf(comPortName, "COM%d", portNumber);  // Format the COM port name
         printf("Attempting to use COM port %d\n", portNumber);
-        HANDLE hComm = connectToCOMPort(comPortName, baudRate);
+        HANDLE hComm = connectToCOMPort(comPortName, baudRate, bmsModel);
         Sleep(500);
         if (hComm != INVALID_HANDLE_VALUE) {
             DWORD bytesWritten;
@@ -52,7 +52,7 @@ HANDLE setupCOMPort(int portNumber, const int baudRate, const unsigned char *que
             for (int i = MIN_COM_PORT_NUMBER; i <= MAX_COM_PORT_NUMBER; ++i) {
                 char comPortName[10];  // Enough space for "COM" + up to 3 digits + null terminator
                 sprintf(comPortName, "COM%d", i);  // Format the COM port name
-                HANDLE hComm = connectToCOMPort(comPortName, baudRate);
+                HANDLE hComm = connectToCOMPort(comPortName, baudRate, bmsModel);
                 Sleep(500);
                 if (hComm != INVALID_HANDLE_VALUE) {
                     printf("Found a COM port: %s\n", comPortName);
@@ -100,7 +100,7 @@ HANDLE setupCOMPort(int portNumber, const int baudRate, const unsigned char *que
 }
 
 // Function to connect to the COM port
-HANDLE connectToCOMPort(const char *portName, const int baudRate) {
+HANDLE connectToCOMPort(const char *portName, const int baudRate, const int bmsModel) {
     printf("Trying port %s\n", portName);
     DCB dcbSerialParams = {0};
     COMMTIMEOUTS timeouts = {0};
@@ -129,7 +129,12 @@ HANDLE connectToCOMPort(const char *portName, const int baudRate) {
     dcbSerialParams.BaudRate = baudRate;
     dcbSerialParams.ByteSize = 8;
     dcbSerialParams.StopBits = ONESTOPBIT;
-    dcbSerialParams.Parity   = NOPARITY;
+    if (bmsModel == ORION_BMS) {
+        printf("Orion BMS detected. Setting Parity to EVEN.\n");
+        dcbSerialParams.Parity = EVENPARITY;
+    } else {
+        dcbSerialParams.Parity   = NOPARITY;
+    }
 
     if (!SetCommState(hComm, &dcbSerialParams)) {
         printf("Could not set serial port parameters\n");

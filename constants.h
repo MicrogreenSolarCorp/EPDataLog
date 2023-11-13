@@ -24,4 +24,10 @@
 #define NO_DELAY_TIME_SUPPLIED -1
 #define INVALID_PORT_VALUE -4
 
+// Used in main.c and connection.c
+#define MEWYEAH_BMS 1
+#define ORION_BMS 2
+#define DALY_BMS 3
+
+
 #endif // CONSTANTS_H

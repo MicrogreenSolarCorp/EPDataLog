@@ -24,6 +24,16 @@ make windows_daly VERSION=vX-X
 make mac_daly VERSION=vX-X
 ```
 
+### For Orion Windows:
+```bash
+make windows_orion VERSION=vX-X
+```
+
+### For Orion MacOS:
+```bash
+make mac_orion VERSION=vX-X
+```
+
 ## Version Tagging and Pushing
 ```
 git tag -a EPDataLog_vX.X -m "Released vX.X for all 4 program variants"

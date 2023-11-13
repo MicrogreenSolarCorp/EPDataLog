@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    HANDLE hComm = setupCOMPort(comPortNumber, BAUD_RATE, connectionQueryData, expectedConnectionQueryResponse, sizeof(connectionQueryData));
+    HANDLE hComm = setupCOMPort(comPortNumber, BAUD_RATE, connectionQueryData, expectedConnectionQueryResponse, sizeof(connectionQueryData), MEWYEAH_BMS);
 
     if (hComm == INVALID_HANDLE_VALUE) return 1; // Could not open COM port.
 

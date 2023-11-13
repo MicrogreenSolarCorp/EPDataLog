@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    int fd = setupSerialPort(serialPortNumber, BAUD_RATE, connectionQueryData, expectedConnectionQueryResponse, sizeof(connectionQueryData));
+    int fd = setupSerialPort(serialPortNumber, BAUD_RATE, connectionQueryData, expectedConnectionQueryResponse, sizeof(connectionQueryData), MEWYEAH_BMS);
     if (fd == -1) {
         return 1;
     }
