@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
         getBMSData(fd, READ_BAT_MAX_MIN_TEMP);
         getBMSData(fd, READ_BAT_CHARGE_DISCHARGE_MOS_STATUS);
         getBMSData(fd, READ_BAT_STATUS_INFO_1);
-        getBMSData(fd, READ_BAT_SINGLE_CELL_VOLTAGE);
+        getBMSData(fd, READ_BAT_SINGLE_CELL_VOLTAGE);  
         getBMSData(fd, READ_BAT_SINGLE_CELL_TEMP);
         getBMSData(fd, READ_BAT_SINGLE_CELL_BALANCE_STATUS);
         getBMSData(fd, READ_BAT_SINGLE_CELL_FAILURE_STATUS);
