@@ -1,5 +1,5 @@
 // File: main.c
-// Description: Main file for Mewyeah Windows program.
+// Description: Main file for Orion Windows program.
 
 #include "../../common/getInput.h"
 #include "../../common/windows/connection.h"
