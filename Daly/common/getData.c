@@ -107,6 +107,11 @@ int getBMSData(CommHandle hComm, int requestType) {
 
         if (nBytesWritten > 0) {
             printf("Data written to port, %d bytes\n", nBytesWritten);
+            printf("Data written to port: ");
+            for (int i = 0; i < nBytesWritten; i++) {
+                printf("%02X ", pRequest[i]);
+            }
+            printf("\n");
         } else {
             printf("Could not write data to port\n");
         }
@@ -116,7 +121,7 @@ int getBMSData(CommHandle hComm, int requestType) {
         ReadFile(hComm, pResponse, sizeof(pResponse), &bytesRead, NULL);
         nBytesRead = bytesRead;
         #else  // macOS and other Unix-like systems
-        usleep(100000);  // Sleep for 100 ms to reduce CPU usage, adjust as necessary
+        usleep(300000);  // Sleep for 300 ms to reduce CPU usage, adjust as necessary
         nBytesRead = (int) read(hComm, pResponse, sizeof(pResponse));
         usleep(100000);  // Sleep for 100 ms to reduce CPU usage, adjust as necessary
         #endif
@@ -289,11 +294,11 @@ void parseBmsResponseSingleCellVoltage(unsigned char *pResponse) {
         // check if frame number is correct
         int frame_number = pResponse[4 + i * MESSAGE_LENGTH];
         if (frame_number != i + 1) { // Frames are 1-indexed. i is 0-indexed
-            printf("Frame number incorrect\n");
+            printf("Frame number incorrect. frame_number: %d, i: %d\n", frame_number, i);
             continue;
         }
 
-        readIndex = i * MESSAGE_LENGTH + 4 + 1; // 4 for the start flage, bms address, command, and data length. 1 for byte 0 being the frame serial number
+        readIndex = i * MESSAGE_LENGTH + 4 + 1; // 4 for the start flag, bms address, command, and data length. 1 for byte 0 being the frame serial number
 
         for (int j = 0; j < CELLS_PER_FRAME; j++) {
             if (nCellsRead == g_number_of_battery_cells) {
@@ -361,7 +366,6 @@ void parseBmsResponseSingleCellBalancingStatus(unsigned char *pResponse) {
     // 8 bits per byte
     // Assuming 8 cells, we want 15 cells -> 2 bytes, 16 cells -> 2 bytes, 17 cells -> 3 bytes
     int nBytesToRetrieve = (g_number_of_battery_cells - 1) / 8 + 1;
-    printf("Bits: \n");
     for (int i = 0; i < nBytesToRetrieve; i++) { // 
         unsigned char byte = pResponse[4 + i];
         for (int j = 0; j < 8; j++) { // Loop through each byte
@@ -371,7 +375,6 @@ void parseBmsResponseSingleCellBalancingStatus(unsigned char *pResponse) {
             bmsData.cellBalancingStatus[i * 8 + j] = bit;
         }
     }
-    printf("End Bits \n");
 
 
     for (int i = 0; i < g_number_of_battery_cells; i++) {

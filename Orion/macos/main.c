@@ -7,6 +7,7 @@
 #include "../common/getData.h"
 
 #include <stdio.h>
+#include <string.h>
 
 #include <unistd.h>
 #include <fcntl.h>
@@ -39,7 +40,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    int fd = setupSerialPort(serialPortNumber, BAUD_RATE, connectionQueryData, expectedConnectionQueryResponse, sizeof(connectionQueryData), MEWYEAH_BMS);
+    int fd = setupSerialPort(serialPortNumber, BAUD_RATE, connectionQueryData, expectedConnectionQueryResponse, strlen((char *) connectionQueryData), MEWYEAH_BMS);
     if (fd == -1) {
         return 1;
     }

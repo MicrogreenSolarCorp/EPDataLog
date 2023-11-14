@@ -84,6 +84,7 @@ int setupSerialPort(const int portNumber, const int baudRate, const unsigned cha
                         for (int i = 0; i < nBytesRead; ++i) {
                             printf("%02X ", buffer[i]);
                         }
+                        printf("\n");
                     } else {
                         printf("Could not read data from port %s\n", portName);
                         close(fd);
