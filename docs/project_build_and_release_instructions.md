@@ -71,3 +71,6 @@ git push origin EPDataLog_vX.X
 ## Important Notes
 - For some reason, when the Mac execuatables are zipped on windows, they cannot be opened properly on Mac. Thus, make sure to zip the Mac executables on Mac.
 - The MacOS versions of the software will work for both x86 and arm based Macs. If curious, feel free look in the make file to see how this is achieved.
+- Orion BMS sends strings instead of byte arrays, but since they're both sent as unsigned char *, there shouldn't be any issues.
+- Orion BMS requires EVEN parity when setting up the COM port connection with the BMS. This is done in the connection.c file.
+- Alarm codes are not displayed with Orion BMS.

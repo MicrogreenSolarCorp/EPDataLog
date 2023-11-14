@@ -13,7 +13,7 @@ EPDataLog is a program designed to facilitate data logging from a Microgreen Ene
 
 
 Notes: 
-- EPDataLog does not support Orion BMS or Linux
+- EPDataLog does not support Linux
 - Mewyeah is now a deprecated version of BMS. We have a Mewyeah version to facilaite data logging for older EnergyPaks. All EnergyPaks in the future will be using Heyo Daly BMS.
 
 
@@ -28,22 +28,26 @@ EPDataLog
 │   ├── common
 │   ├── macos
 │   └── windows
+├── Orion
+│   ├── common
+│   ├── macos
+│   └── windows
 └── Mewyeah
     ├── common
     ├── macos
     └── windows
 ```
 
-In the project root (EPDataLog), we have three directories, Daly, Mewyeah, and common. Daly and Mewyeah contain code specific to the respective BMS. Common contains code that is shared between the two BMS versions.
+In the project root (EPDataLog), we have three directories, Daly, Mewyeah, and common. Daly, Orion, and Mewyeah contain code specific to the respective BMS. Common contains code that is shared between the two BMS versions.
 
-In EPDataLog/common/, we have two directories, macos and windows. These directories contain code that is shared between the two BMS versions. Specifically, each OS directory contains code for:
+In EPDataLog/common/, we have two directories, macos and windows. These directories contain code that is shared between the three BMS versions. Specifically, each OS directory contains code for:
 
 - connecting to the BMS (MacOS uses serial port communication, Windows uses COM Port communication)
 - outputting data to a CSV file (MacOS requires extra configuration to get the correct file path)
 
 In EPDataLog/common/, there is also a file named readProgramParams.c. This file contains code for reading command line arguments. This file is shared between all 4 program versions.
 
-In EPDataLog/common/Daly and EPDataLog/common/Mewyeah, we have three directories, common, macos, windows.
+In EPDataLog/common/Daly, EPDataLog/common/Orion, and EPDataLog/common/Mewyeah, we have three directories, common, macos, windows.
 
 ### Common
 /common contains code that is shared between the two OS versions. Specifically, the common directory contains the code for getting and parsing data from the BMS. The code is the same for both BMS versions, with the exception of reading and writing data to the BMS, in which we use preprocessor conditional directives to include the correct code for each OS version.
