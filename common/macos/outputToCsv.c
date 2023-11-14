@@ -134,7 +134,7 @@ void outputBMSDataToCsv(FILE *fp) {
     }
 
     fprintf(fp, "\n");
-
+    fflush(fp);
     printf("Data written to csv file\n");
 
 }
