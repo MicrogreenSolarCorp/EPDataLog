@@ -198,13 +198,13 @@ int parseBmsResponse(unsigned char *pResponse) {
             printf("pResponse %s\n", pResponse);
 			value = hex2int(&pResponse[9], 2);
             printf("value: %d\n", value);
-            bmsData.temperatures[1] = value * (0.0001 * 1000);
+            bmsData.temperatures[1] = value;
             printf("highest_temperature: %.2fC\n", bmsData.temperatures[1]);
      		break;
 
    		case 0XF029:   // Lowest Pack Temperature
 			value = hex2int(&pResponse[9], 2);
-            bmsData.temperatures[0] = value * (0.0001 * 1000);
+            bmsData.temperatures[0] = value;
             printf("lowest_temperature: %.2fC\n", bmsData.temperatures[0]);
      		break;
 
