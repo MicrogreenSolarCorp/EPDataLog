@@ -253,12 +253,14 @@ void parseBmsCellVolt( unsigned char *pResponse, int len )
 
 	pLocalResponse = &pResponse[9]; //Strip out the first few non-response characters
 
+
 	if (pidCode == 0XF100){ //If the response is for cells 1-12
 		int i;
 		int nCell = 12;
 		if (gPopulatedCellCount < 12) {
 			nCell = gPopulatedCellCount;
 		}
+
 		
   		for (i = 0; i < nCell; i++){
 			int value = hex2int(&pLocalResponse[i*4], 4);

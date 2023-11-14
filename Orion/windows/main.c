@@ -53,6 +53,7 @@ int main(int argc, char *argv[]) {
 		for(int i = 0; i < 10; i++){ //Get current multiple times to calculate an accurate average current
 			getBMSData(hComm, READ_UNSIGNED_PACK_CURRENT);
 		}
+        getBMSData(hComm, READ_POPULATED_CELL_COUNT);
 		getBMSData(hComm, READ_PACK_VOLTAGE);
 		getBMSData(hComm, READ_PACK_STATE_OF_CHARGE);
 		getBMSData(hComm, READ_PACK_AMPHOURS);
