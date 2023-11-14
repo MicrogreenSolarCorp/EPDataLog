@@ -35,27 +35,39 @@ windows: windows_mewyeah windows_daly windows_orion
 
 windows_mewyeah:
 	cd Mewyeah/windows && \
-	$(CC) $(CFLAGS) -o EPDataLog_Mewyeah_Windows_$(VERSION) ../../common/getInput.c ../../common/windows/connection.c ../../common/windows/outputToCsv.c ../common/getData.c main.c
+	$(CC) $(CFLAGS) -o EPDataLog_Mewyeah_Windows_$(VERSION) ../../common/getInput.c ../../common/windows/connection.c ../../common/windows/outputToCsv.c ../common/getData.c main.c && \
+	PowerShell -Command "Compress-Archive -Path EPDataLog_Mewyeah_Windows_$(VERSION).exe, ../../README.md -DestinationPath EPDataLog_Mewyeah_Windows_$(VERSION).zip"
 
 windows_daly:
 	cd Daly/windows && \
-	$(CC) $(CFLAGS) -o EPDataLog_Daly_Windows_$(VERSION) ../../common/getInput.c ../../common/windows/connection.c ../../common/windows/outputToCsv.c ../common/getData.c main.c
+	$(CC) $(CFLAGS) -o EPDataLog_Daly_Windows_$(VERSION) ../../common/getInput.c ../../common/windows/connection.c ../../common/windows/outputToCsv.c ../common/getData.c main.c && \
+	PowerShell -Command "Compress-Archive -Path EPDataLog_Daly_Windows_$(VERSION).exe, ../../README.md -DestinationPath EPDataLog_Daly_Windows_$(VERSION).zip"
 
 windows_orion:
 	cd Orion/windows && \
-	$(CC) $(CFLAGS) -o EPDataLog_Orion_Windows_$(VERSION) ../../common/getInput.c ../../common/windows/connection.c ../../common/windows/outputToCsv.c ../common/getData.c main.c
+	$(CC) $(CFLAGS) -o EPDataLog_Orion_Windows_$(VERSION) ../../common/getInput.c ../../common/windows/connection.c ../../common/windows/outputToCsv.c ../common/getData.c main.c && \
+	PowerShell -Command "Compress-Archive -Path EPDataLog_Orion_Windows_$(VERSION).exe, ../../README.md -DestinationPath EPDataLog_Orion_Windows_$(VERSION).zip"
 
+# Rules for cleanup
 clean_windows:
-	cmd /C "del /Q Daly\windows\EPDataLog_Daly_Windows_$(VERSION).*"
-	cmd /C "del /Q Mewyeah\windows\EPDataLog_Mewyeah_Windows_$(VERSION).*"
-	cmd /C "del /Q Orion\windows\EPDataLog_Orion_Windows_$(VERSION).*"
+	cmd /C "del /Q Daly\windows\EPDataLog_Daly_Windows_*"
+	cmd /C "del /Q Mewyeah\windows\EPDataLog_Mewyeah_Windows_*"
+	cmd /C "del /Q Orion\windows\EPDataLog_Orion_Windows_*"
 
-clean_macos:
-	rm -f Mewyeah/macos/EPDataLog_Mewyeah_MacOS_$(VERSION)* Daly/macos/EPDataLog_Daly_MacOS_$(VERSION)* Orion/macos/EPDataLog_Orion_MacOS_$(VERSION)*
+clean_mac:
+	rm -f Mewyeah/macos/EPDataLog_Mewyeah_MacOS_* Daly/macos/EPDataLog_Daly_MacOS_* Orion/macos/EPDataLog_Orion_MacOS_*
 
 clean_csv:
-	find ./Mewyeah -type f -name '*.csv' -exec rm {} +
-	find ./Daly -type f -name '*.csv' -exec rm {} +
-	find ./Orion -type f -name '*.csv' -exec rm {} +
+    ifeq ($(OS),Darwin) # macOS
+		find ./Mewyeah -type f -name '*.csv' -exec rm {} +
+		find ./Daly -type f -name '*.csv' -exec rm {} +
+		find ./Orion -type f -name '*.csv' -exec rm {} +
+    else ifeq ($(OS),Linux) # Linux
+    else # Assuming Windows
+		PowerShell -Command "Get-ChildItem ./Mewyeah -Recurse -Filter *.csv | Remove-Item"
+		PowerShell -Command "Get-ChildItem ./Daly -Recurse -Filter *.csv | Remove-Item"
+		PowerShell -Command "Get-ChildItem ./Orion -Recurse -Filter *.csv | Remove-Item"
+    endif
+
 
 .PHONY: mac mac_mewyeah mac_daly mac_orion windows windows_mewyeah windows_daly windows_orion clean_windows clean_macos clean_csv
