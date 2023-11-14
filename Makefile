@@ -36,17 +36,17 @@ windows: windows_mewyeah windows_daly windows_orion
 windows_mewyeah:
 	cd Mewyeah/windows && \
 	$(CC) $(CFLAGS) -o EPDataLog_Mewyeah_Windows_$(VERSION) ../../common/getInput.c ../../common/windows/connection.c ../../common/windows/outputToCsv.c ../common/getData.c main.c && \
-	PowerShell -Command "Compress-Archive -Path EPDataLog_Mewyeah_Windows_$(VERSION).exe, ../../README.md -DestinationPath EPDataLog_Mewyeah_Windows_$(VERSION).zip"
+	PowerShell -Command "Compress-Archive -Path EPDataLog_Mewyeah_Windows_$(VERSION).exe, ../../README.md -DestinationPath EPDataLog_Mewyeah_Windows_$(VERSION).zip -Force"
 
 windows_daly:
 	cd Daly/windows && \
 	$(CC) $(CFLAGS) -o EPDataLog_Daly_Windows_$(VERSION) ../../common/getInput.c ../../common/windows/connection.c ../../common/windows/outputToCsv.c ../common/getData.c main.c && \
-	PowerShell -Command "Compress-Archive -Path EPDataLog_Daly_Windows_$(VERSION).exe, ../../README.md -DestinationPath EPDataLog_Daly_Windows_$(VERSION).zip"
+	PowerShell -Command "Compress-Archive -Path EPDataLog_Daly_Windows_$(VERSION).exe, ../../README.md -DestinationPath EPDataLog_Daly_Windows_$(VERSION).zip -Force"
 
 windows_orion:
 	cd Orion/windows && \
 	$(CC) $(CFLAGS) -o EPDataLog_Orion_Windows_$(VERSION) ../../common/getInput.c ../../common/windows/connection.c ../../common/windows/outputToCsv.c ../common/getData.c main.c && \
-	PowerShell -Command "Compress-Archive -Path EPDataLog_Orion_Windows_$(VERSION).exe, ../../README.md -DestinationPath EPDataLog_Orion_Windows_$(VERSION).zip"
+	PowerShell -Command "Compress-Archive -Path EPDataLog_Orion_Windows_$(VERSION).exe, ../../README.md -DestinationPath EPDataLog_Orion_Windows_$(VERSION).zip -Force"
 
 # Rules for cleanup
 clean_windows:
