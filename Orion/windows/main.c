@@ -14,8 +14,8 @@
 #define BAUD_RATE 9600
 
 // Use pRequestVolt as queryData
-unsigned char *connectionQueryData = ":0322F00D\n";
-unsigned char *expectedConnectionQueryResponse = ":05";
+unsigned char *connectionQueryData = (unsigned char *)":0322F00D\n";
+unsigned char *expectedConnectionQueryResponse = (unsigned char *)":05";
 
 
 int main(int argc, char *argv[]) {

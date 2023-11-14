@@ -12,6 +12,7 @@ mac_mewyeah:
 	$(CC) $(CFLAGS) -arch arm64 -o EPDataLog_Mewyeah_MacOS_$(VERSION)_arm ../../common/getInput.c ../../common/macos/connection.c ../../common/macos/outputToCsv.c ../common/getData.c main.c && \
 	lipo -create -output EPDataLog_Mewyeah_MacOS_$(VERSION)_universal EPDataLog_Mewyeah_MacOS_$(VERSION)_x86 EPDataLog_Mewyeah_MacOS_$(VERSION)_arm && \
 	rm EPDataLog_Mewyeah_MacOS_$(VERSION)_x86 EPDataLog_Mewyeah_MacOS_$(VERSION)_arm
+	cd Mewyeah/macos && zip -j EPDataLog_Mewyeah_MacOS_$(VERSION).zip EPDataLog_Mewyeah_MacOS_$(VERSION)_universal ../../README.md
 
 mac_daly:
 	cd Daly/macos && \
@@ -19,6 +20,7 @@ mac_daly:
 	$(CC) $(CFLAGS) -arch arm64 -o EPDataLog_Daly_MacOS_$(VERSION)_arm ../../common/getInput.c ../../common/macos/connection.c ../../common/macos/outputToCsv.c ../common/getData.c main.c && \
 	lipo -create -output EPDataLog_Daly_MacOS_$(VERSION)_universal EPDataLog_Daly_MacOS_$(VERSION)_x86 EPDataLog_Daly_MacOS_$(VERSION)_arm && \
 	rm EPDataLog_Daly_MacOS_$(VERSION)_x86 EPDataLog_Daly_MacOS_$(VERSION)_arm
+	cd Daly/macos && zip -j EPDataLog_Daly_MacOS_$(VERSION).zip EPDataLog_Daly_MacOS_$(VERSION)_universal ../../README.md
 
 mac_orion:
 	cd Orion/macos && \
@@ -26,6 +28,7 @@ mac_orion:
 	$(CC) $(CFLAGS) -arch arm64 -o EPDataLog_Orion_MacOS_$(VERSION)_arm ../../common/getInput.c ../../common/macos/connection.c ../../common/macos/outputToCsv.c ../common/getData.c main.c && \
 	lipo -create -output EPDataLog_Orion_MacOS_$(VERSION)_universal EPDataLog_Orion_MacOS_$(VERSION)_x86 EPDataLog_Orion_MacOS_$(VERSION)_arm && \
 	rm EPDataLog_Orion_MacOS_$(VERSION)_x86 EPDataLog_Orion_MacOS_$(VERSION)_arm
+	cd Orion/macos && zip -j EPDataLog_Orion_MacOS_$(VERSION).zip EPDataLog_Orion_MacOS_$(VERSION)_universal ../../README.md
 
 # Windows build rules
 windows: windows_mewyeah windows_daly windows_orion

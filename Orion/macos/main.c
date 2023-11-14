@@ -17,8 +17,8 @@
 #define BAUD_RATE 9600
 
 // Use pRequestVolt as queryData
-unsigned char *connectionQueryData = ":0322F00D\n";
-unsigned char *expectedConnectionQueryResponse = ":05";
+unsigned char *connectionQueryData = (unsigned char *)":0322F00D\n";
+unsigned char *expectedConnectionQueryResponse = (unsigned char *)":05";
 
 
 int main(int argc, char *argv[]) {
@@ -66,7 +66,7 @@ int main(int argc, char *argv[]) {
 		getBMSData(fd, READ_CELL_VOLTAGES_13_TO_24);
 
         outputBMSDataToCsv(fp);
-        Sleep(delayTimeMs);
+        usleep(delayTimeMs * 1000); // usleep takes sleep time in us (1 millionth of a second)
     }
 
     // Close the file

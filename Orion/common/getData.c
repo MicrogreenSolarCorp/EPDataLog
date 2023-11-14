@@ -15,11 +15,11 @@ int gCurrentCounter = 0;
 void getDateTime();
 int getBMSData(CommHandle hComm, char *request);
 int parseBmsResponse(unsigned char *pResponse);
-unsigned int hex2int(char *a, unsigned int len);
+unsigned int hex2int(unsigned char *a, unsigned int len);
 void parseBmsCellVolt( unsigned char *pResponse, int len );
 int getAveragedCurrent(int current);
 
-unsigned int hex2int(char *a, unsigned int len) //Length is in characters, not bytes
+unsigned int hex2int(unsigned char  *a, unsigned int len) //Length is in characters, not bytes
 {
 	int i;
 	int val = 0;

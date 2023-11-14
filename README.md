@@ -11,5 +11,5 @@ For developer compile, build, and release instructions, visit [Build and Release
 
 # About
 EPDataLog is a program designed to facilitate data logging from a Microgreen EnergyPak Battery.
-- **Supported BMS:** Mewyeah, Heyo Daly
+- **Supported BMS:** Mewyeah, Heyo Daly, Orion
 - **Supported Operating Systems:** Windows, MacOS
